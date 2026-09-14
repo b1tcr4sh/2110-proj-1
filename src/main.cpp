@@ -15,35 +15,42 @@ Exit
 */
 
 #include <iostream>
+#include "../include/ResourceManager.h"
+#include "../include/ReservationManager.h"
 
 using namespace std;
 
 bool handleInput(int input) {
   switch (input) {
-  case 1:
-    return true;
-  case 2:
-    return true;
-  case 3:
-    return true;
-  case 4:
-    return true;
-  case 5:
-    return true;
-  case 6:
-    return true;
-  case 7:
-    return true;
-  case 8:
-    return true;
-  case 9:
-    return false; // return false to escape input loop
-  default:
-    return true;
+    case 1: // View Resources
+      return true;
+    case 2: // Create Reservation
+      return true;
+    case 3: // Cancel Reservation
+      return true;
+    case 4: // View Waiting Lists
+      return true;
+    case 5: // Undo Cancellation
+      return true;
+    case 6: // Search Reservations
+      return true;
+    case 7: // Sort Resources
+      return true;
+    case 8: // Generate Report
+      return true;
+    case 9:
+      return false; // return false to escape input loop
+    default:
+      return true;
   }
 }
 
 int main() {
+  ResourceManager resouceManager;
+  // ReservationManager reservationManager;
+
+  resouceManager.LoadFromFile(); // make sure to load all the resources
+
 
   int input;
 

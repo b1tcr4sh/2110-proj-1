@@ -1,3 +1,5 @@
+#ifndef _RESOURCE_
+#define _RESOURCE_
 /*
 must include:
 Resource ID
@@ -34,3 +36,4 @@ public:
 
 private:
 };
+#endif
