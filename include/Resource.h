@@ -29,11 +29,12 @@ enum ResourceType {
 
 class Resource {
 public:
-  int id;
+  string id;
   string name;
   ResourceType type;
   bool available;
 
+  Resource(string id, string name, ResourceType type, bool available);
 private:
 };
 #endif
