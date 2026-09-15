@@ -50,6 +50,6 @@ void ReservationManager::Create(string studentID, string studentName, string res
     Create(mostRecentID + 1, studentID, studentID, resourceID, date); // sets id to 1 + whatever the last ID was so IDs count up
 }
 
-void ReservationManager::Cancel() {} // 4 maddie
+void ReservationManager::Cancel(int ID) {} // 4 maddie
 
-void ReservationManager::Restore() {} // 4 maddie
+int ReservationManager::Restore() {return 0;} // 4 maddie
