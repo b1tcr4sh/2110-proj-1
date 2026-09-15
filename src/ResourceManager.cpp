@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Resource* ResourceManager::GetResouceAt(int i) {return 0;}
+Resource* ResourceManager::ResourceByID(string id) {return 0;}
 
 void ResourceManager::PrintList() {
     cout << "Resources: " << endl << endl;

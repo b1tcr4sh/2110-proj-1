@@ -47,31 +47,35 @@ bool handleInput(int input, ResourceManager resourceManager) {
   }
 }
 
+void printMenu() {
+  cout << "===== Campus Resource Reservation System =====" << endl;
+  cout << "1. View Resources" << endl;
+  cout << "2. Create Reservation" << endl;
+  cout << "3. Cancel Reservation" << endl;
+  cout << "4. View Waiting Lists" << endl;
+  cout << "5. Undo Cancellation" << endl;
+  cout << "6. Search Reservations" << endl;
+  cout << "7. Sort Resources" << endl;
+  cout << "8. Generate Report" << endl;
+  cout << "9. Exit" << endl;
+  cout << endl << "Selection > ";
+}
+
 int main() {
   ResourceManager resourceManager;
   // ReservationManager reservationManager;
 
   resourceManager.LoadFromFile(); // make sure to load all the resources
 
+  printMenu();
 
   int input;
-
-  do {
-    cout << "===== Campus Resource Reservation System =====" << endl;
-    cout << "1. View Resources" << endl;
-    cout << "2. Create Reservation" << endl;
-    cout << "3. Cancel Reservation" << endl;
-    cout << "4. View Waiting Lists" << endl;
-    cout << "5. Undo Cancellation" << endl;
-    cout << "6. Search Reservations" << endl;
-    cout << "7. Sort Resources" << endl;
-    cout << "8. Generate Report" << endl;
-    cout << "9. Exit" << endl;
-    cout << endl << "Selection > ";
-
-    cin >> input;
-
-  } while (handleInput(input, resourceManager));
+  bool cont = true;
+  while (cont) {
+        cin >> input;
+        cont = handleInput(input, resourceManager);
+  }
 
   cout << "bye bye..." << endl;
+  return 0;
 }
