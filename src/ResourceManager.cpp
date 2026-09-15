@@ -1,13 +1,43 @@
 #include "../include/ResourceManager.h"
 #include <fstream>
-#include <stdio.h>
 #include <sstream>
+#include <iostream>
+#include <string>
 
-Resource* ResourceManager::GetResouceAt(int i) {}
+using namespace std;
 
-Resource* ResourceManager::GetAll() {}
+Resource* ResourceManager::GetResouceAt(int i) {return 0;}
 
-bool ResourceManager Sort() {}
+void ResourceManager::PrintList() {
+    cout << "Resources: " << endl << endl;
+
+    for (int i = 0; i < existingResources.size(); i++) {
+        Resource e = existingResources.at(i);
+
+        string type;
+        switch (e.type) {
+            case study_room:
+                type = "Study Room";
+                break;
+            case laptop:
+                type = "Laptop";
+                break;
+            case calculator:
+                type = "Calculator";
+                break;
+            case lab_equipment:
+                type = "Lab Equipment";
+                break;
+            case tutoring_appt:
+                type = "Tutoring Appointment";
+                break;
+        }
+
+        cout << e.id << " | " << e.name << " | " << type << " | " << (e.available ? "available" : "unavailable") << endl;
+    }
+}
+
+bool ResourceManager::Sort() {return 0;}
 
 void ResourceManager::LoadFromFile() {
     ifstream file("resources.txt");
@@ -15,21 +45,23 @@ void ResourceManager::LoadFromFile() {
 
     while (!file.eof()) {
         string line;
-        getline(line, file);
+        getline(file, line); // read 1 line from file
 
+
+        // split line into tokens
         stringstream stream(line);
 
         string id;
-        getline(stream, id, "|");
+        getline(stream, id, '|');
 
         string name;
-        getline(stream, name, "|");
+        getline(stream, name, '|');
 
         string typeString;
-        getline(stream, typeString, "|");
+        getline(stream, typeString, '|');
 
         string availability;
-        getline(stream, availability, "|");
+        getline(stream, availability, '|');
 
 
         ResourceType type;

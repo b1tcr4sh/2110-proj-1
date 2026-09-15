@@ -20,9 +20,10 @@ Exit
 
 using namespace std;
 
-bool handleInput(int input) {
+bool handleInput(int input, ResourceManager resourceManager) {
   switch (input) {
     case 1: // View Resources
+        resourceManager.PrintList();
       return true;
     case 2: // Create Reservation
       return true;
@@ -41,15 +42,16 @@ bool handleInput(int input) {
     case 9:
       return false; // return false to escape input loop
     default:
-      return true;
+        cout << "Input not recognized!!" << endl;
+      return true; // return true to loop again
   }
 }
 
 int main() {
-  ResourceManager resouceManager;
+  ResourceManager resourceManager;
   // ReservationManager reservationManager;
 
-  resouceManager.LoadFromFile(); // make sure to load all the resources
+  resourceManager.LoadFromFile(); // make sure to load all the resources
 
 
   int input;
@@ -69,7 +71,7 @@ int main() {
 
     cin >> input;
 
-  } while (handleInput(input));
+  } while (handleInput(input, resourceManager));
 
   cout << "bye bye..." << endl;
 }

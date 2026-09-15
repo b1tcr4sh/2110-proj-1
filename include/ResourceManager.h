@@ -8,7 +8,7 @@
 class ResourceManager { // manages loading and storing the list of available resouces.
     public:
         Resource* GetResouceAt(int i);
-        Resource* GetAll();
+        void PrintList();
         bool Sort();
         void LoadFromFile();
     private:
