@@ -20,27 +20,78 @@ Exit
 
 using namespace std;
 
-bool handleInput(int input, ResourceManager resourceManager) {
+void createReservationFromUser(ReservationManager manager) {
+  
+  string resourceID;
+  cout << "ID of resource to book > ";
+  cin >> resourceID;
+
+  string studentName;
+  cout << "Who is booking? (Student Name) > ";
+  cin >> studentName;
+
+  string studentID;
+  cout << "What is " << studentName << "'s ID? > ";
+  cin >> studentID;
+
+  string date;
+  cout << "What is today's date? (MM/DD/YYYY) > ";
+  cin >> date;
+
+  manager.Create(studentID, studentName, resourceID, date);
+
+  cout << "Done!" << endl;
+}
+
+void cancelReservationFromUser(ReservationManager manager) {
+  int ID;
+  cout << "ID of reservation to cancel > ";
+  cin >> ID;
+
+  manager.Cancel(ID);
+
+  cout << "Cancelled reservation." << endl << "Added to cancellation history." << endl;
+}
+
+void searchReservationFromUser(ReservationManager manager) {
+  int ID;
+  cout << "ID of reservation you are looking for > ";
+  cin >> ID;
+
+  Reservation res = manager.Search(ID);
+
+  cout << res.ID << ": " << res.date << endl;
+  cout << " Resource: " << res.resourceID << endl;
+  cout << " Student: " << res.studentName << " | " << res.studentID;
+}
+
+bool handleInput(int input, ResourceManager resourceManager, ReservationManager reservationManager) {
   switch (input) {
     case 1: // View Resources
         resourceManager.PrintList();
       return true;
     case 2: // Create Reservation
+        createReservationFromUser(reservationManager);
       return true;
     case 3: // Cancel Reservation
+        cancelReservationFromUser(reservationManager);
       return true;
     case 4: // View Waiting Lists
       return true;
     case 5: // Undo Cancellation
+      cout << "Restored reservation " << reservationManager.Restore() << endl;
       return true;
     case 6: // Search Reservations
+      searchReservationFromUser(reservationManager);
       return true;
     case 7: // Sort Resources
+      resourceManager.Sort();
+      resourceManager.PrintList();
       return true;
     case 8: // Generate Report
       return true;
     case 9:
-      return false; // return false to escape input loop
+      return false; // return false to escape input loop (exit program)
     default:
         cout << "Input not recognized!!" << endl;
       return true; // return true to loop again
@@ -63,7 +114,7 @@ void printMenu() {
 
 int main() {
   ResourceManager resourceManager;
-  // ReservationManager reservationManager;
+  ReservationManager reservationManager;
 
   resourceManager.LoadFromFile(); // make sure to load all the resources
 
@@ -73,7 +124,7 @@ int main() {
   bool cont = true;
   while (cont) {
         cin >> input;
-        cont = handleInput(input, resourceManager);
+        cont = handleInput(input, resourceManager, reservationManager);
   }
 
   cout << "bye bye..." << endl;
