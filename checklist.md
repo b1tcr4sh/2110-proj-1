@@ -1,4 +1,4 @@
-# Resource management
+# Resource management -- Rylee
 
 ## storing
 
@@ -12,21 +12,21 @@
 - [ ]  search
 - [ ]  sort
 
-## waiting list
+## waiting list - Maddy
 
 - [ ]  requests are placed in queue
 - [ ]  available resources are assigned to next request
 
-# Reservation management
+# Reservation management 
 
-## storing
+## storing - Rylee
 
 - [ ]  reservation class
 - [ ]  reservation manager class
 - [ ]  create
 - [ ]  requests are placed in **queue**
 
-## accessing/editing
+## accessing/editing - maddy
 
 - [ ]  cancel
 - [ ]  **stack** of canceled reservations
@@ -41,7 +41,7 @@
   * [ ]  Number of active reservations
   * [ ]  Waiting list reports
 
-# User interface
+# User interface - Rylee
 
 input handling for:
 
