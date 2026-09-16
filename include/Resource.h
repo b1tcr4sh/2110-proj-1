@@ -34,6 +34,8 @@ public:
   ResourceType type;
   bool available;
 
+ queue<string> WaitingList;
+
   Resource(string id, string name, ResourceType type, bool available);
 private:
 };
