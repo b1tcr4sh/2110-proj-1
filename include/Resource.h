@@ -16,6 +16,7 @@ Tutoring appointments
 */
 
 #include <string>
+#include <queue>
 
 using namespace std;
 
@@ -35,6 +36,8 @@ public:
   bool available;
 
  queue<string> WaitingList;
+
+
 
   Resource(string id, string name, ResourceType type, bool available);
 private:
