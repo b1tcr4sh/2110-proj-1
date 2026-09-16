@@ -8,4 +8,4 @@ ResourceManager.cpp:
 	g++ -c include/Resource.h include/ResourceManager.h
 
 ReservationManager.cpp: 
-	g++ -c include/Reservation.h include/ReservationManager
+	g++ -c include/Reservation.h include/ReservationManager.h
