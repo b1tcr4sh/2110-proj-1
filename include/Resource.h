@@ -37,7 +37,7 @@ public:
 
  queue<string> WaitingList;
 
-
+// some important methods can go in here. 
 
   Resource(string id, string name, ResourceType type, bool available);
 private:
