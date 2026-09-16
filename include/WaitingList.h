@@ -7,8 +7,8 @@
 class WaitingList {
     public:
     queue<Request> waitingList;
-
-
+    
+    private:
 
 }
 
@@ -18,7 +18,7 @@ class Request {
 
 
 
-
+    private: 
 
 }
 
