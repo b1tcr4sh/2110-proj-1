@@ -34,7 +34,7 @@
 - [ ]  **stack** of canceled reservations
 - [ ]  recall most recent reservation
 
-# Reporting
+# Reporting 
 
 - [ ]  system reports including:
 - [ ]  Most frequently reserved resources
