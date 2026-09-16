@@ -37,7 +37,11 @@ public:
 
  queue<string> WaitingList;
  
- void addToWaitingList(string studentID);
+ void addToWaitingList(string studentID); // add
+
+ void removeFromWaitingList(); // remove
+
+ void displayWaitingList(); // display
 
 // some important methods can go in here. 
 
