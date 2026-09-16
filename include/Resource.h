@@ -16,6 +16,7 @@ Tutoring appointments
 */
 
 #include <string>
+#include <queue>
 
 using namespace std;
 
@@ -33,6 +34,16 @@ public:
   string name;
   ResourceType type;
   bool available;
+
+ queue<string> WaitingList;
+ 
+ void addToWaitingList(string studentID); // add
+
+ void removeFromWaitingList(); // remove
+
+ void displayWaitingList(); // display
+
+
 
   Resource(string id, string name, ResourceType type, bool available);
 private:
