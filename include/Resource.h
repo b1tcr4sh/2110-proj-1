@@ -36,6 +36,8 @@ public:
   bool available;
 
  queue<string> WaitingList;
+ 
+ void addToWaitingList(string studentID);
 
 // some important methods can go in here. 
 
