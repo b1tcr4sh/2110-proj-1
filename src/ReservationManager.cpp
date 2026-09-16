@@ -50,6 +50,31 @@ void ReservationManager::Create(string studentID, string studentName, string res
     Create(mostRecentID + 1, studentID, studentID, resourceID, date); // sets id to 1 + whatever the last ID was so IDs count up
 }
 
-void ReservationManager::Cancel(int ID) {} // 4 maddie
+void ReservationManager::Cancel(int ID) { // Rylan
+    queue<Reservation> remaining;
 
-int ReservationManager::Restore() {return 0;} // 4 maddie
+    while (!reservations.empty()) {
+        Reservation current = reservations.front();
+        reservations.pop();
+
+        if (current.ID == ID) {
+            canceled.push(current);
+        }
+        else {
+            remaining.push(current);
+        }
+    }
+    reservations = remaining;
+} 
+
+int ReservationManager::Restore() {  // Rylan
+    if (canceled.empty()) {
+        return -1;
+    }
+    Reservation restored = canceled.top();
+    canceled.pop();
+
+    reservations.push(restored);
+
+    return restored.ID;
+}

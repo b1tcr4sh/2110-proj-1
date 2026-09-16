@@ -17,7 +17,7 @@ class ReservationManager {
         void Cancel(int ID); // finds reservation with ID and adds it to canceled stack
         int Restore(); // pops top reservation off stack and restores it to the **back of the queue** ; returns ID of restored reservation
     private:
-        stack<int> canceled; // stack of canceled reservation IDs -- most recent cancellation is on top (only the most recent can be restored/popped)
+        stack<Reservation> canceled; // stack of canceled reservation IDs -- most recent cancellation is on top (only the most recent can be restored/popped)
         queue<Reservation> reservations; // queue of reservations FIFO
 
         int mostRecentID;
