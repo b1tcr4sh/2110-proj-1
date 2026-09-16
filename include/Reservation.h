@@ -13,6 +13,8 @@ class Reservation {
         string resourceID;
         string date;
 
+        Reservation* next;
+
         Reservation(int ID, string studentID, string studentName, string resourceID, string date);
 };
 

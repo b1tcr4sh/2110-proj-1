@@ -79,7 +79,7 @@ bool handleInput(int input, ResourceManager resourceManager, ReservationManager 
     case 4: // View Waiting Lists
       return true;
     case 5: // Undo Cancellation
-      cout << "Restored reservation " << reservationManager.Restore() << endl;
+      cout << "Restored reservation " << endl;
       return true;
     case 6: // Search Reservations
       searchReservationFromUser(reservationManager);

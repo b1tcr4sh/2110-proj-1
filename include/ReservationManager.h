@@ -9,16 +9,20 @@
 class ReservationManager {
     public:
         void LoadFromFile(); // load reservations from file and place on queue
-        void PrintQueue(); // print out the queue
+        void PrintList(); // print out the queue
         
         void Create(int ID, string studentID, string studentName, string resourceID, string date); // creates a new reservation and adds to queue
         void Create(string studentID, string studentName, string resourceID, string date); // creates a new reservation and generates ID; adds to queue
         Reservation Search(int ID); // find position in queue of reservation with ID
         void Cancel(int ID); // finds reservation with ID and adds it to canceled stack
-        int Restore(); // pops top reservation off stack and restores it to the **back of the queue** ; returns ID of restored reservation
+        void Restore(); // pops top reservation off stack and restores it to the **back of the queue** ; returns ID of restored reservation
     private:
-        stack<int> canceled; // stack of canceled reservation IDs -- most recent cancellation is on top (only the most recent can be restored/popped)
-        queue<Reservation> reservations; // queue of reservations FIFO
+        void Append(Reservation* res);
+        int FindByID(int ID);
+
+        stack<Reservation*> canceled; // stack of canceled reservations -- most recent cancellation is on top (only the most recent can be restored/popped)
+        Reservation* head; // first reservation in linked list
+        Reservation* tail; // last reservation in linked list
 
         int mostRecentID;
 
