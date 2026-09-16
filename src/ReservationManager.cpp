@@ -54,7 +54,7 @@ void ReservationManager::Create(int ID, string studentID, string studentName, st
     if (resource->available) { 
         resource->available = false; // if available, mark unavailable
     } else {
-        resource->addToWaitingList(studentID); //  if available, mark unavailable ;  awaiting maddie
+        resource->addToWaitingList(studentID); //  if available, mark unavailable
     }
 
 
