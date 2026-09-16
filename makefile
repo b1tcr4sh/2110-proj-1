@@ -1,13 +1,11 @@
 main: main.cpp
 	g++ src/main.cpp
 
-main.cpp: src/ResourceManager.cpp, src/ReservationManager.cpp
-	g++ src/ResourceManager.cpp src/ReservationManager.cpp
+main.cpp: ResourceManager.cpp ReservationManager.cpp
+	g++ -c src/ResourceManager.cpp src/ReservationManager.cpp
 
-src/ResourceManager.cpp: include/ResourceManager.h, include/Resource.h
-	g++ include/Resource.h include/ResourceManager.h
+ResourceManager.cpp: 
+	g++ -c include/Resource.h include/ResourceManager.h
 
-src/ReservationManager.cpp: include/ReservationManager.h, include/Reservation.h
-	g++ include/Reservation.h include/ReservationManager
-
-clean:
+ReservationManager.cpp: 
+	g++ -c include/Reservation.h include/ReservationManager
