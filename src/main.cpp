@@ -43,7 +43,7 @@ void createReservationFromUser(ReservationManager manager, ResourceManager resou
   cout << "Done!" << endl;
 }
 
-void cancelReservationFromUser(ReservationManager manager) {
+void cancelReservationFromUser(ReservationManager& manager) {
   int ID;
   cout << "ID of reservation to cancel > ";
   cin >> ID;
@@ -53,7 +53,7 @@ void cancelReservationFromUser(ReservationManager manager) {
   cout << "Cancelled reservation." << endl << "Added to cancellation history." << endl;
 }
 
-void searchReservationFromUser(ReservationManager manager) {
+void searchReservationFromUser(ReservationManager& manager) {
   int ID;
   cout << "ID of reservation you are looking for > ";
   cin >> ID;
@@ -65,7 +65,7 @@ void searchReservationFromUser(ReservationManager manager) {
   cout << " Student: " << res.studentName << " | " << res.studentID;
 }
 
-bool handleInput(int input, ResourceManager resourceManager, ReservationManager reservationManager) {
+bool handleInput(int input, ResourceManager& resourceManager, ReservationManager& reservationManager) {
   switch (input) {
     case 1: // View Resources
         resourceManager.PrintList();
