@@ -45,11 +45,11 @@ void ReservationManager::PrintList() {
     }
 }
 
-void ReservationManager::Create(int ID, string studentID, string studentName, string resourceID, string date, ResourceManager manager) { // creates a new reservation and enqueues it
+void ReservationManager::Create(int ID, string studentID, string studentName, string resourceID, string date, ResourceManager resourceManager) { // creates a new reservation and enqueues it
     Reservation res(ID, studentID, studentName, resourceID, date); // create new reservation
 
 
-    Resource* resource = manager.FindByID(resourceID);  // find the resource
+    Resource* resource = resourceManager.FindByID(resourceID);  // find the resource
 
     if (resource->available) { 
         resource->available = false; // if available, mark unavailable
@@ -75,6 +75,10 @@ void ReservationManager::Cancel(int ID) { // find the reservation in the list, r
     while (current->ID != ID) { // get element with matching id
         current = current->next;
     }
+
+    // repair list references
+    current->prev->next = current->next;
+    current->next->prev = current->prev;
 
     canceled.push(current);
 
@@ -104,5 +108,6 @@ int ReservationManager::FindByID(int id) { // traverse list until element is fou
 
 void ReservationManager::Append(Reservation* res) {
     tail->next = res; // point last element to this one
+    res->prev = tail; // point to previous element
     tail = res; // point tail at this one
 }
