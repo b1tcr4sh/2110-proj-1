@@ -22,53 +22,53 @@ using namespace std;
 
 void createReservationFromUser(ReservationManager manager, ResourceManager resourceManager) {
   
-  // string resourceID;
-  // cout << "ID of resource to book > ";
-  // cin >> resourceID;
+  string resourceID;
+  cout << "ID of resource to book > ";
+  cin >> resourceID;
 
-  // string studentName;
-  // cout << "Who is booking? (Student Name) > ";
-  // cin >> studentName;
+  string studentName;
+  cout << "Who is booking? (Student Name) > ";
+  cin >> studentName;
 
-  // string studentID;
-  // cout << "What is " << studentName << "'s ID? > ";
-  // cin >> studentID;
+  string studentID;
+  cout << "What is " << studentName << "'s ID? > ";
+  cin >> studentID;
 
-  // string date;
-  // cout << "What is today's date? (MM/DD/YYYY) > ";
-  // cin >> date;
+  string date;
+  cout << "What is today's date? (MM/DD/YYYY) > ";
+  cin >> date;
 
-  // manager.Create(studentID, studentName, resourceID, date, resourceManager);
+  manager.Create(studentID, studentName, resourceID, date, resourceManager);
 
-  // cout << "Done!" << endl;
+  cout << "Done!" << endl;
 }
 
 void cancelReservationFromUser(ReservationManager& manager) {
-  // int ID;
-  // cout << "ID of reservation to cancel > ";
-  // cin >> ID;
+  int ID;
+  cout << "ID of reservation to cancel > ";
+  cin >> ID;
 
-  // manager.Cancel(ID);
+  manager.Cancel(ID);
 
-  // cout << "Cancelled reservation." << endl << "Added to cancellation history." << endl;
+  cout << "Cancelled reservation." << endl << "Added to cancellation history." << endl;
 }
 
 void searchReservationFromUser(ReservationManager& manager) {
-  // int ID;
-  // cout << "ID of reservation you are looking for > ";
-  // cin >> ID;
+  int ID;
+  cout << "ID of reservation you are looking for > ";
+  cin >> ID;
 
-  // Reservation res = manager.Search(ID);
+  Reservation res = manager.Search(ID);
 
-  // cout << res.ID << ": " << res.date << endl;
-  // cout << " Resource: " << res.resourceID << endl;
-  // cout << " Student: " << res.studentName << " | " << res.studentID;
+  cout << res.ID << ": " << res.date << endl;
+  cout << " Resource: " << res.resourceID << endl;
+  cout << " Student: " << res.studentName << " | " << res.studentID;
 }
 
 bool handleInput(int input, ResourceManager& resourceManager, ReservationManager& reservationManager) {
   switch (input) {
     case 1: // View Resources
-        // resourceManager.PrintList();
+        resourceManager.PrintList();
       return true;
     case 2: // Create Reservation
         createReservationFromUser(reservationManager, resourceManager);
@@ -85,8 +85,8 @@ bool handleInput(int input, ResourceManager& resourceManager, ReservationManager
       searchReservationFromUser(reservationManager);
       return true;
     case 7: // Sort Resources
-      // resourceManager.Sort();
-      // resourceManager.PrintList();
+      resourceManager.Sort();
+      resourceManager.PrintList();
       return true;
     case 8: // Generate Report
       return true;
