@@ -20,7 +20,7 @@ Exit
 
 using namespace std;
 
-void createReservationFromUser(ReservationManager manager) {
+void createReservationFromUser(ReservationManager manager, ResourceManager resourceManager) {
   
   string resourceID;
   cout << "ID of resource to book > ";
@@ -38,7 +38,7 @@ void createReservationFromUser(ReservationManager manager) {
   cout << "What is today's date? (MM/DD/YYYY) > ";
   cin >> date;
 
-  manager.Create(studentID, studentName, resourceID, date);
+  manager.Create(studentID, studentName, resourceID, date, resourceManager);
 
   cout << "Done!" << endl;
 }
@@ -71,7 +71,7 @@ bool handleInput(int input, ResourceManager resourceManager, ReservationManager 
         resourceManager.PrintList();
       return true;
     case 2: // Create Reservation
-        createReservationFromUser(reservationManager);
+        createReservationFromUser(reservationManager, resourceManager);
       return true;
     case 3: // Cancel Reservation
         cancelReservationFromUser(reservationManager);
@@ -117,6 +117,7 @@ int main() {
   ReservationManager reservationManager;
 
   resourceManager.LoadFromFile(); // make sure to load all the resources
+  reservationManager.LoadFromFile(resourceManager); // load reservations and handle them....
 
   printMenu();
 

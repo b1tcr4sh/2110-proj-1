@@ -11,6 +11,8 @@ class ResourceManager { // manages loading and storing the list of available res
         void PrintList(); // what it says
         bool Sort(); // sort by id??
         void LoadFromFile(); // loads all the resources from the file into the vector
+
+        Resource* FindByID(string ID);
     private:
         vector<Resource> existingResources;
 };
