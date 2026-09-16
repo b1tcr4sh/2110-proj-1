@@ -1,5 +1,9 @@
 #include "../include/Resource.h"
 
+#include <iostream>
+
+using namespace std;
+
 Resource::Resource(string id, string name, ResourceType type, bool available) {
     this->id = id;
     this->name = name;
