@@ -17,4 +17,4 @@ main.o: ResourceManager.o ReservationManager.o src/main.cpp
 	g++ -Wall -c src/main.cpp 
 
 clean:
-	rm include/*.gch *.o
+	rm include/*.gch *.o proj1.out

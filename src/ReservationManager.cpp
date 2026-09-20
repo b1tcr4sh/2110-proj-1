@@ -7,7 +7,7 @@
 
 
 void ReservationManager::LoadFromFile(ResourceManager manager) { // loads reservation data line-by-line and creates new queue reservations
-    ifstream file("reservations.txt");
+    ifstream file("data/reservations.txt");
     
     while (!file.eof()) {
         string line;
@@ -18,20 +18,26 @@ void ReservationManager::LoadFromFile(ResourceManager manager) { // loads reserv
 
         string id;
         getline(stream, id, '|');
+        cout << id << endl;
 
         string studentID;
         getline(stream, studentID, '|');
+        cout << studentID << endl;
 
         string studentName;
         getline(stream, studentName, '|');
+        cout << studentName << endl;
 
         string resourceID;
         getline(stream, resourceID, '|');
+        cout << resourceID << endl;
 
         string date;
         getline(stream, date, '|');
 
-        this->Create(stoi(id), studentID, studentName, resourceID, date, manager);
+        cout << date << endl;
+
+        Create(stoi(id), studentID, studentName, resourceID, date, manager);
     }
 }
 

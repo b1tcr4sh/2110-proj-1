@@ -40,7 +40,7 @@ void ResourceManager::PrintList() {
 bool ResourceManager::Sort() {return 0;}
 
 void ResourceManager::LoadFromFile() {
-    ifstream file("resources.txt");
+    ifstream file("data/resources.txt");
 
 
     while (!file.eof()) {
