@@ -119,13 +119,13 @@ int main() {
   resourceManager.LoadFromFile(); // make sure to load all the resources
   reservationManager.LoadFromFile(resourceManager); // load reservations and handle them....
 
-  printMenu();
-
   int input;
   bool cont = true;
   while (cont) {
-        cin >> input;
-        cont = handleInput(input, resourceManager, reservationManager);
+    cout << endl;
+    printMenu();
+    cin >> input;
+    cont = handleInput(input, resourceManager, reservationManager);
   }
 
   cout << "bye bye..." << endl;
