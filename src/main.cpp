@@ -52,7 +52,7 @@ void createReservationFromUser(ReservationManager manager, ResourceManager resou
   cin >> date;
   cout << date << endl;
 
-  manager.Create(studentID, studentName, resourceID, date, resourceManager);
+  manager.Create(studentID, studentName, resourceID, date);
 
   cout << "Done!" << endl;
 }
@@ -132,10 +132,10 @@ void printMenu() {
 
 int main() {
   ResourceManager resourceManager;
-  ReservationManager reservationManager;
+  ReservationManager reservationManager(&resourceManager);
 
   resourceManager.LoadFromFile(); // make sure to load all the resources
-  reservationManager.LoadFromFile(resourceManager); // load reservations and handle them....
+  reservationManager.LoadFromFile(); // load reservations and handle them....
 
   int input;
   bool cont = true;

@@ -7,7 +7,11 @@
 
 
 
-void ReservationManager::LoadFromFile(ResourceManager manager) { // loads reservation data line-by-line and creates new queue reservations
+ReservationManager::ReservationManager(ResourceManager* manager) {
+    resourceManager = manager;
+}
+
+void ReservationManager::LoadFromFile() { // loads reservation data line-by-line and creates new queue reservations
     ifstream file("data/reservations.txt");
     
     while (!file.eof()) {
@@ -32,7 +36,7 @@ void ReservationManager::LoadFromFile(ResourceManager manager) { // loads reserv
         string date;
         getline(stream, date, '|');
 
-        Create(stoi(id), studentID, studentName, resourceID, date, manager);
+        Create(stoi(id), studentID, studentName, resourceID, date);
     }
 }
 
@@ -49,10 +53,10 @@ void ReservationManager::PrintList() {
     }
 }
 
-void ReservationManager::Create(int ID, string studentID, string studentName, string resourceID, string date, ResourceManager resourceManager) { // creates a new reservation and enqueues it
+void ReservationManager::Create(int ID, string studentID, string studentName, string resourceID, string date) { // creates a new reservation and enqueues it
     Reservation res(ID, studentID, studentName, resourceID, date); // create new reservation
 
-    Resource* resource = resourceManager.FindByID(resourceID);  // find the resource
+    Resource* resource = resourceManager->FindByID(resourceID);  // find the resource
 
     if (resource->available) { 
         resource->available = false; // if available, mark unavailable
@@ -66,8 +70,8 @@ void ReservationManager::Create(int ID, string studentID, string studentName, st
     cout << "added reservation for " << studentName << " with ID " <<  ID << endl;
 }
 
-void ReservationManager::Create(string studentID, string studentName, string resourceID, string date, ResourceManager manager) { // creates a new reservation and enqueues it
-    Create(mostRecentID + 1, studentID, studentName, resourceID, date, manager); // sets id to 1 + whatever the last ID was so IDs count up
+void ReservationManager::Create(string studentID, string studentName, string resourceID, string date) { // creates a new reservation and enqueues it
+    Create(mostRecentID + 1, studentID, studentName, resourceID, date); // sets id to 1 + whatever the last ID was so IDs count up
 }
 
 Reservation ReservationManager::Search(int ID) {
