@@ -26,10 +26,7 @@ class ReservationManager {
         void Append(Reservation& res);
 
         list<Reservation> reservations;
-
         stack<Reservation*> canceled; // stack of canceled reservations -- most recent cancellation is on top (only the most recent can be restored/popped)
-        Reservation* head; // first reservation in linked list
-        Reservation* tail; // last reservation in linked list
 
         int mostRecentID;
         bool isEmpty = true;

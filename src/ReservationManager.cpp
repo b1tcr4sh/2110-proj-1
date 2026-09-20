@@ -45,7 +45,7 @@ void ReservationManager::PrintList() {
     for (it = reservations.begin(); it != reservations.end(); it++) {
         cout << it->ID << ": " << it->date << endl;
         cout << " Resource: " << it->resourceID << endl;
-        cout << " Student: " << it->studentName << " | " << it->studentID;
+        cout << " Student: " << it->studentName << " | " << it->studentID << endl;
     }
 }
 
@@ -63,10 +63,11 @@ void ReservationManager::Create(int ID, string studentID, string studentName, st
     mostRecentID = ID;
 
     reservations.push_back(res);
+    cout << "added reservation for " << studentName << " with ID " <<  ID << endl;
 }
 
 void ReservationManager::Create(string studentID, string studentName, string resourceID, string date, ResourceManager manager) { // creates a new reservation and enqueues it
-    Create(mostRecentID + 1, studentID, studentID, resourceID, date, manager); // sets id to 1 + whatever the last ID was so IDs count up
+    Create(mostRecentID + 1, studentID, studentName, resourceID, date, manager); // sets id to 1 + whatever the last ID was so IDs count up
 }
 
 Reservation ReservationManager::Search(int ID) {
@@ -87,7 +88,7 @@ void ReservationManager::Cancel(int ID) { // find the reservation in the list, r
 
 
     canceled.push(&res);
-    // reservations.remove(res);
+    reservations.remove(res);
 } 
 
 void ReservationManager::Restore() { // pop top of stack and add to the end of list

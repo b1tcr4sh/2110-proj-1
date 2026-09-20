@@ -34,18 +34,23 @@ void createReservationFromUser(ReservationManager manager, ResourceManager resou
   string resourceID;
   cout << "ID of resource to book > ";
   cin >> resourceID;
+  cout << resourceID << endl;
 
+  cin.ignore();
   string studentName;
   cout << "Who is booking? (Student Name): " << endl;
   getline(cin, studentName);
+  cout << studentName << endl;
 
   string studentID;
   cout << "What is " << studentName << "'s ID? > ";
   cin >> studentID;
+  cout << studentID << endl;
 
   string date;
   cout << "What is today's date? (MM/DD/YYYY) > ";
   cin >> date;
+  cout << date << endl;
 
   manager.Create(studentID, studentName, resourceID, date, resourceManager);
 
