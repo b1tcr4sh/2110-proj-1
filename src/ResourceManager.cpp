@@ -11,7 +11,7 @@ Resource* ResourceManager::ResourceByID(string id) {return 0;}
 void ResourceManager::PrintList() {
     cout << "Resources: " << endl << endl;
 
-    for (int i = 0; i < existingResources.size(); i++) {
+    for (unsigned int i = 0; i < existingResources.size(); i++) {
         Resource e = existingResources.at(i);
 
         string type;
@@ -86,4 +86,8 @@ void ResourceManager::LoadFromFile() {
         existingResources.push_back(resource);
 
     }
+}
+
+Resource* ResourceManager::FindByID(string ID) {
+    return 0;
 }

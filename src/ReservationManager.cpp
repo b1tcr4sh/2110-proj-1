@@ -68,9 +68,9 @@ void ReservationManager::Create(string studentID, string studentName, string res
 }
 
 void ReservationManager::Cancel(int ID) { // find the reservation in the list, remove it from the list, and push it onto the stack
-    int pos = FindByID(ID);
+    // int pos = FindByID(ID);
     
-    int i = 0;
+    // int i = 0;
     Reservation* current = head;
     while (current->ID != ID) { // get element with matching id
         current = current->next;

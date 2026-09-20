@@ -1,30 +1,20 @@
-main: ResourceManager.o ReservationManager.o
-	g++ src/main.cpp
+proj1.out: main.o
+	g++ -Wall main.o Reservation.o ReservationManager.o Resource.o ResourceManager.o -o proj1.out
 
-ResourceManager.o: ResourceManager.h
-	g++ -c src/ResourceManager.cpp
+Reservation.o: include/Reservation.h src/Reservation.cpp
+	g++ -Wall -c include/Reservation.h src/Reservation.cpp
 
-ResourceManager.h: Resource.o
-	g++ -c include/ResourceManager.h
+ReservationManager.o: ResourceManager.o Reservation.o include/ReservationManager.h src/ReservationManager.cpp 
+	g++ -Wall -c include/ReservationManager.h src/ReservationManager.cpp
 
-Resource.o: Resource.h
-	g++ -c src/Resource.cpp
+Resource.o: include/Resource.h src/Resource.cpp 
+	g++ -Wall -c include/Resource.h src/Resource.cpp
 
-Resource.h:
-	g++ -c include/Resource.h
+ResourceManager.o: Resource.o include/ResourceManager.h src/ResourceManager.cpp
+	g++ -Wall -c include/ResourceManager.h src/ResourceManager.cpp 
 
-ReservationManager.o: ReservationManager.h ResourceManager.h
-	g++ -c src/ReservationManager.cpp
-
-ReservationManager.h: Reservation.o ResourceManager.h
-	g++ -c include/ReservationManager.h
-
-Reservation.o: Reservation.h
-	g++ -c src/Reservation.cpp
-
-Reservation.h:
-	g++ -c include/Reservation.h
-
+main.o: ResourceManager.o ReservationManager.o src/main.cpp
+	g++ -Wall -c src/main.cpp 
 
 clean:
 	rm include/*.gch *.o
