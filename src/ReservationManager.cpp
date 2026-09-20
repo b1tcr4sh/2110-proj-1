@@ -6,6 +6,10 @@
 #include <string>
 
 
+ReservationManager::ReservationManager() {
+    isEmpty = true;
+}
+
 void ReservationManager::LoadFromFile(ResourceManager manager) { // loads reservation data line-by-line and creates new queue reservations
     ifstream file("data/reservations.txt");
     
@@ -18,24 +22,18 @@ void ReservationManager::LoadFromFile(ResourceManager manager) { // loads reserv
 
         string id;
         getline(stream, id, '|');
-        cout << id << endl;
 
         string studentID;
         getline(stream, studentID, '|');
-        cout << studentID << endl;
 
         string studentName;
         getline(stream, studentName, '|');
-        cout << studentName << endl;
 
         string resourceID;
         getline(stream, resourceID, '|');
-        cout << resourceID << endl;
 
         string date;
         getline(stream, date, '|');
-
-        cout << date << endl;
 
         Create(stoi(id), studentID, studentName, resourceID, date, manager);
     }
@@ -59,18 +57,41 @@ void ReservationManager::Create(int ID, string studentID, string studentName, st
 
     if (resource->available) { 
         resource->available = false; // if available, mark unavailable
+        // cout << "Resource is now reserved" << endl;
     } else {
         resource->addToWaitingList(studentID); //  if available, mark unavailable
+        // cout << "added " << studentName << " to waiting list for " << ID << endl;
     }
-
 
     mostRecentID = ID;
 
-    Append(&res); // append to end of list
+    if (isEmpty) { // if the list is empty and this is the first element, we need to initialize the list by...
+        head = &res; // setting head to point to the first element
+        tail = &res; // setting tail to point to the firs element
+        isEmpty = false; // setting isEmpty to false to subsequent additions get appended rather than overwriting head
+        // cout << "created list and set reservation to head and tail" << endl;
+    } else {
+        Append(&res); // append to end of list
+        // cout << "appended to reservation list" << endl;
+    }
 }
 
 void ReservationManager::Create(string studentID, string studentName, string resourceID, string date, ResourceManager manager) { // creates a new reservation and enqueues it
     Create(mostRecentID + 1, studentID, studentID, resourceID, date, manager); // sets id to 1 + whatever the last ID was so IDs count up
+}
+
+Reservation* ReservationManager::Search(int ID) {
+    Reservation* current = head;
+
+    do {
+        if (current->ID == ID) {
+            return current;
+        }
+        current = current->next; // step to next element
+    } while (current != tail); // keep looking until we get to the end
+        
+    cout << "Could not find reservation " << ID << endl;
+    return nullptr;
 }
 
 void ReservationManager::Cancel(int ID) { // find the reservation in the list, remove it from the list, and push it onto the stack

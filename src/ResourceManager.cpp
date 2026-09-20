@@ -89,5 +89,12 @@ void ResourceManager::LoadFromFile() {
 }
 
 Resource* ResourceManager::FindByID(string ID) {
-    return 0;
+    for (unsigned int i = 0; i < existingResources.size(); i++) {
+        if (existingResources.at(i).id == ID) {
+            return &existingResources.at(i);
+        }
+    }
+
+    cout << "Was unabe to find resource " << ID << endl;
+    return nullptr;
 }
