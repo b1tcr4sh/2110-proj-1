@@ -20,9 +20,13 @@ void Resource::removeFromWaitingList(){
 }
 
 void Resource::displayWaitingList() {
+    if (WaitingList.empty()) {
+        cout << endl << "Waiting ist is empty." << endl;
+    }
+
     queue<string> copy = WaitingList;
 
-    cout << "Waiting List: " << endl;
+    cout << endl << "Waiting List: " << endl;
 
     while (!copy.empty()) {
         cout << copy.front() << endl;

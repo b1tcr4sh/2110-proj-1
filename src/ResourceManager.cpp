@@ -53,16 +53,19 @@ void ResourceManager::LoadFromFile() {
 
         string id;
         getline(stream, id, '|');
+        // cout << id << endl;
 
         string name;
         getline(stream, name, '|');
+        // cout << name << endl;
 
         string typeString;
         getline(stream, typeString, '|');
+        // cout << typeString << endl;
 
         string availability;
         getline(stream, availability, '|');
-
+        // cout << availability << endl;
 
         ResourceType type;
         if (typeString == "Study Room") type = study_room;
@@ -71,14 +74,16 @@ void ResourceManager::LoadFromFile() {
         else if (typeString == "Lab Equipment") type = lab_equipment;
         else if (typeString == "Tutoring Appointment") type = tutoring_appt;
         else {
-            // handle error
+            cout << "Was unable to read resource type ( " << type << " ) for " << id << endl;
         }
 
         bool available;
-        if (availability == "Available") available = true;
-        else if (availability == "Unavailable") available = false;
-        else {
-            // handle error
+        if (availability == "Available") { 
+            available = true;
+        } else if (availability == "Unavailable") { 
+            available = false;
+        } else {
+            cout << "Was unable to read availability ( " << availability << " ) for " << id << endl;
         }
 
         Resource resource(id, name, type, available);

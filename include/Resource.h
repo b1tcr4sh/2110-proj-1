@@ -35,17 +35,16 @@ public:
   ResourceType type;
   bool available;
 
- queue<string> WaitingList;
  
- void addToWaitingList(string studentID); // add
+  void addToWaitingList(string studentID); // add
 
- void removeFromWaitingList(); // remove
+  void removeFromWaitingList(); // remove
 
- void displayWaitingList(); // display
-
-
+  void displayWaitingList(); // display
 
   Resource(string id, string name, ResourceType type, bool available);
+
 private:
+   queue<string> WaitingList;
 };
 #endif

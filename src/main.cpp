@@ -20,6 +20,15 @@ Exit
 
 using namespace std;
 
+void viewWaitingLists(ResourceManager manager) {
+  string id;
+  cout << "ID of resource to view? > ";
+  cin >> id;
+
+  Resource* res = manager.FindByID(id);
+  res->displayWaitingList();
+}
+
 void createReservationFromUser(ReservationManager manager, ResourceManager resourceManager) {
   
   string resourceID;
@@ -27,8 +36,8 @@ void createReservationFromUser(ReservationManager manager, ResourceManager resou
   cin >> resourceID;
 
   string studentName;
-  cout << "Who is booking? (Student Name) > ";
-  cin >> studentName;
+  cout << "Who is booking? (Student Name): " << endl;
+  getline(cin, studentName);
 
   string studentID;
   cout << "What is " << studentName << "'s ID? > ";
@@ -58,11 +67,11 @@ void searchReservationFromUser(ReservationManager& manager) {
   cout << "ID of reservation you are looking for > ";
   cin >> ID;
 
-  Reservation* res = manager.Search(ID);
+  Reservation res = manager.Search(ID);
 
-  cout << res->ID << ": " << res->date << endl;
-  cout << " Resource: " << res->resourceID << endl;
-  cout << " Student: " << res->studentName << " | " << res->studentID;
+  cout << res.ID << ": " << res.date << endl;
+  cout << " Resource: " << res.resourceID << endl;
+  cout << " Student: " << res.studentName << " | " << res.studentID;
 }
 
 bool handleInput(int input, ResourceManager& resourceManager, ReservationManager& reservationManager) {
@@ -77,6 +86,7 @@ bool handleInput(int input, ResourceManager& resourceManager, ReservationManager
         cancelReservationFromUser(reservationManager);
       return true;
     case 4: // View Waiting Lists
+      viewWaitingLists(resourceManager);
       return true;
     case 5: // Undo Cancellation
       cout << "Restored reservation " << endl;
@@ -92,6 +102,9 @@ bool handleInput(int input, ResourceManager& resourceManager, ReservationManager
       return true;
     case 9:
       return false; // return false to escape input loop (exit program)
+    case 10:
+      reservationManager.PrintList();
+      return true;
     default:
         cout << "Input not recognized!!" << endl;
       return true; // return true to loop again

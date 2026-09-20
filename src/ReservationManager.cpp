@@ -6,9 +6,6 @@
 #include <string>
 
 
-ReservationManager::ReservationManager() {
-    isEmpty = true;
-}
 
 void ReservationManager::LoadFromFile(ResourceManager manager) { // loads reservation data line-by-line and creates new queue reservations
     ifstream file("data/reservations.txt");
@@ -40,101 +37,63 @@ void ReservationManager::LoadFromFile(ResourceManager manager) { // loads reserv
 }
 
 void ReservationManager::PrintList() {
-    Reservation* current = head;
+    list<Reservation>::iterator it = reservations.begin();
+
+    cout << "Reservation List: " << endl;
 
     // step through list
-    while (current != tail) {
-        cout << ""; // print reservation information
-        current = current->next;
+    for (it = reservations.begin(); it != reservations.end(); it++) {
+        cout << it->ID << ": " << it->date << endl;
+        cout << " Resource: " << it->resourceID << endl;
+        cout << " Student: " << it->studentName << " | " << it->studentID;
     }
 }
 
 void ReservationManager::Create(int ID, string studentID, string studentName, string resourceID, string date, ResourceManager resourceManager) { // creates a new reservation and enqueues it
     Reservation res(ID, studentID, studentName, resourceID, date); // create new reservation
 
-
     Resource* resource = resourceManager.FindByID(resourceID);  // find the resource
 
     if (resource->available) { 
         resource->available = false; // if available, mark unavailable
-        // cout << "Resource is now reserved" << endl;
     } else {
         resource->addToWaitingList(studentID); //  if available, mark unavailable
-        // cout << "added " << studentName << " to waiting list for " << ID << endl;
     }
 
     mostRecentID = ID;
 
-    if (isEmpty) { // if the list is empty and this is the first element, we need to initialize the list by...
-        head = &res; // setting head to point to the first element
-        tail = &res; // setting tail to point to the firs element
-        isEmpty = false; // setting isEmpty to false to subsequent additions get appended rather than overwriting head
-        // cout << "created list and set reservation to head and tail" << endl;
-    } else {
-        Append(&res); // append to end of list
-        // cout << "appended to reservation list" << endl;
-    }
+    reservations.push_back(res);
 }
 
 void ReservationManager::Create(string studentID, string studentName, string resourceID, string date, ResourceManager manager) { // creates a new reservation and enqueues it
     Create(mostRecentID + 1, studentID, studentID, resourceID, date, manager); // sets id to 1 + whatever the last ID was so IDs count up
 }
 
-Reservation* ReservationManager::Search(int ID) {
-    Reservation* current = head;
+Reservation ReservationManager::Search(int ID) {
+    list<Reservation>::iterator it = reservations.begin();
 
-    do {
-        if (current->ID == ID) {
-            return current;
+    // step through list
+    for (it = reservations.begin(); it != reservations.end(); it++) {
+        if (it->ID == ID) {
+            return *it;
         }
-        current = current->next; // step to next element
-    } while (current != tail); // keep looking until we get to the end
-        
-    cout << "Could not find reservation " << ID << endl;
-    return nullptr;
+    }
+
+    return *new Reservation(-1, "null", "null", "null", "null");
 }
 
 void ReservationManager::Cancel(int ID) { // find the reservation in the list, remove it from the list, and push it onto the stack
-    // int pos = FindByID(ID);
-    
-    // int i = 0;
-    Reservation* current = head;
-    while (current->ID != ID) { // get element with matching id
-        current = current->next;
-    }
+    Reservation res = Search(ID);
 
-    // repair list references
-    current->prev->next = current->next;
-    current->next->prev = current->prev;
 
-    canceled.push(current);
-
+    canceled.push(&res);
+    // reservations.remove(res);
 } 
 
 void ReservationManager::Restore() { // pop top of stack and add to the end of list
     Reservation* restored = canceled.top(); // get the element on top
     
-    Append(restored); // append the element to the end of the list
+    reservations.push_back(*restored); // append the element to the end of the list
 
     canceled.pop(); // pop it off the top of the cancelled stack
 } 
-
-int ReservationManager::FindByID(int id) { // traverse list until element is found; return -1 if not found
-    Reservation* current = head;
-    int i = 0;
-
-    while (current != tail) {
-        if (current->ID == id) {
-            return i; // found; return position in list
-        }
-        current = current->next;
-        i++;
-    }
-    return -1; // not found
-}
-
-void ReservationManager::Append(Reservation* res) {
-    tail->next = res; // point last element to this one
-    res->prev = tail; // point to previous element
-    tail = res; // point tail at this one
-}
