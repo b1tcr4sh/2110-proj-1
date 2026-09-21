@@ -59,7 +59,7 @@ void ReservationManager::Create(int ID, string studentID, string studentName, st
     if (resource->available) { 
         resource->available = false; // if available, mark unavailable
     } else {
-        resource->addToWaitingList(studentID); //  if unavailable, add the student's ID to the waiting list of the resource they are requesting
+        resource->addToWaitingList(studentName); //  if unavailable, add the student's name to the waiting list of the resource they are requesting
     }
 
     mostRecentID = ID; // this ID is now the most recent
