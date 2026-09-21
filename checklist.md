@@ -49,7 +49,7 @@ input handling for:
 * [X]  View Resources
 * [X]  Create Reservation
 * [X]  Cancel Reservation
-* [ ]  View Waiting Lists
+* [X]  View Waiting Lists
 * [X]  Undo Cancellation
 * [X]  Search Reservations
 * [X]  Sort Resources
