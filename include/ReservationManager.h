@@ -23,16 +23,12 @@ class ReservationManager {
         void Restore(); // pops top reservation off stack and restores it to the **back of the queue** ; returns ID of restored reservation
         // int FindByID(int ID);
     private:
-        void Append(Reservation& res);
-
-        list<Reservation> reservations;
+        list<Reservation> reservations; // linked list that stores all reservations
         stack<Reservation*> canceled; // stack of canceled reservations -- most recent cancellation is on top (only the most recent can be restored/popped)
 
-        int mostRecentID;
-        bool isEmpty = true;
+        int mostRecentID; // ID of most recent reservation; used for generating new IDs for reservations when they are created
 
-        ResourceManager* resourceManager;
-
+        ResourceManager* resourceManager; // reference to the resource manager so we can grab and edit resources
 };
 
 

@@ -12,8 +12,8 @@ class ResourceManager { // manages loading and storing the list of available res
         bool Sort(); // sort by id??
         void LoadFromFile(); // loads all the resources from the file into the vector
 
-        Resource* FindByID(string ID);
+        Resource* FindByID(string ID); // finds the resource with ID and returns it
     private:
-        vector<Resource> existingResources;
+        vector<Resource> existingResources; // vector containing all existing resources
 };
 #endif

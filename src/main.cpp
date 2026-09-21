@@ -1,19 +1,3 @@
-// hewo
-// hi meooowwww
-// gay faggot gay
-
-/*
-View Resources
-Create Reservation
-Cancel Reservation
-View Waiting Lists
-Undo Cancellation
-Search Reservations
-Sort Resources
-Generate Report
-Exit
-*/
-
 #include <iostream>
 #include "../include/ResourceManager.h"
 #include "../include/ReservationManager.h"
@@ -22,37 +6,32 @@ using namespace std;
 
 void viewWaitingLists(ResourceManager manager) {
   string id;
-  cout << "ID of resource to view? > ";
-  cin >> id;
+  cout << "ID of resource to view? > "; 
+  cin >> id; // get ID of resource
 
-  Resource* res = manager.FindByID(id);
-  res->displayWaitingList();
+  Resource* res = manager.FindByID(id); // find resource from ID
+  res->displayWaitingList(); // print out the resource's waiting list
 }
 
 void createReservationFromUser(ReservationManager manager, ResourceManager resourceManager) {
-  
   string resourceID;
   cout << "ID of resource to book > ";
-  cin >> resourceID;
-  cout << resourceID << endl;
+  cin >> resourceID; // get resource ID from user
 
   cin.ignore();
   string studentName;
   cout << "Who is booking? (Student Name): " << endl;
-  getline(cin, studentName);
-  cout << studentName << endl;
+  getline(cin, studentName); // get student name from user; handle names with multiple words!!
 
   string studentID;
   cout << "What is " << studentName << "'s ID? > ";
-  cin >> studentID;
-  cout << studentID << endl;
+  cin >> studentID; // get ID from student
 
   string date;
   cout << "What is today's date? (MM/DD/YYYY) > ";
-  cin >> date;
-  cout << date << endl;
+  cin >> date; // get date from user
 
-  manager.Create(studentID, studentName, resourceID, date);
+  manager.Create(studentID, studentName, resourceID, date); // use all of these to create a reservation
 
   cout << "Done!" << endl;
 }
@@ -60,9 +39,9 @@ void createReservationFromUser(ReservationManager manager, ResourceManager resou
 void cancelReservationFromUser(ReservationManager& manager) {
   int ID;
   cout << "ID of reservation to cancel > ";
-  cin >> ID;
+  cin >> ID; // get reservation ID
 
-  manager.Cancel(ID);
+  manager.Cancel(ID); // cancel it
 
   cout << "Cancelled reservation." << endl << "Added to cancellation history." << endl;
 }
@@ -70,40 +49,42 @@ void cancelReservationFromUser(ReservationManager& manager) {
 void searchReservationFromUser(ReservationManager& manager) {
   int ID;
   cout << "ID of reservation you are looking for > ";
-  cin >> ID;
+  cin >> ID; // get reservation ID
 
-  Reservation res = manager.Search(ID);
+  Reservation res = manager.Search(ID); // find it by ID
 
-  cout << res.ID << ": " << res.date << endl;
-  cout << " Resource: " << res.resourceID << endl;
-  cout << " Student: " << res.studentName << " | " << res.studentID;
+  cout << res.ID << ": " << res.date << endl; // print out the ID and date
+  cout << " Resource: " << res.resourceID << endl; // print out the resource ID
+  cout << " Student: " << res.studentName << " | " << res.studentID; // print out student info
 }
 
 bool handleInput(int input, ResourceManager& resourceManager, ReservationManager& reservationManager) {
+
+  // switch to handle different inputs (numbers 1 - 10); also handles errors in case input is incorrect
   switch (input) {
     case 1: // View Resources
-        resourceManager.PrintList();
+        resourceManager.PrintList(); // print the list or resources
       return true;
     case 2: // Create Reservation
-        createReservationFromUser(reservationManager, resourceManager);
+        createReservationFromUser(reservationManager, resourceManager); // handle creating a reservation
       return true;
     case 3: // Cancel Reservation
-        cancelReservationFromUser(reservationManager);
+        cancelReservationFromUser(reservationManager); // handle cancelling a reservation
       return true;
     case 4: // View Waiting Lists
-      viewWaitingLists(resourceManager);
+      viewWaitingLists(resourceManager); // handle getting a resource and printing it's waiting list
       return true;
     case 5: // Undo Cancellation
-      cout << "Restored reservation " << endl;
+      cout << "Restored reservation " << endl; // not implemented yet
       return true;
     case 6: // Search Reservations
-      searchReservationFromUser(reservationManager);
+      searchReservationFromUser(reservationManager); // handle searching for a reservation and printing it's info
       return true;
     case 7: // Sort Resources
-      resourceManager.Sort();
-      resourceManager.PrintList();
+      resourceManager.Sort(); // sort the resources; not yet implemented
+      resourceManager.PrintList(); // print them out
       return true;
-    case 8: // Generate Report
+    case 8: // Generate Report; not yet implemented
       return true;
     case 9:
       return false; // return false to escape input loop (exit program)
@@ -139,11 +120,11 @@ int main() {
 
   int input;
   bool cont = true;
-  while (cont) {
+  while (cont) { // loop until program end; makes sure that user gets prompted with a new menu after each operaiton
     cout << endl;
-    printMenu();
+    printMenu(); // print the menu
     cin >> input;
-    cont = handleInput(input, resourceManager, reservationManager);
+    cont = handleInput(input, resourceManager, reservationManager); // take user input and do things with it
   }
 
   cout << "bye bye..." << endl;
