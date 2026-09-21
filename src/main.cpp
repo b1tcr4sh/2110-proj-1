@@ -33,7 +33,7 @@ void createReservationFromUser(ReservationManager manager, ResourceManager resou
 
   manager.Create(studentID, studentName, resourceID, date); // use all of these to create a reservation
 
-  cout << "Done!" << endl;
+  cout << "added reservation for " << studentName << endl;
 }
 
 void cancelReservationFromUser(ReservationManager& manager) {
@@ -52,6 +52,11 @@ void searchReservationFromUser(ReservationManager& manager) {
   cin >> ID; // get reservation ID
 
   Reservation res = manager.Search(ID); // find it by ID
+
+  if (res.ID == -1) {
+    cout << "Not found..." << endl;
+    return;
+  }
 
   cout << res.ID << ": " << res.date << endl; // print out the ID and date
   cout << " Resource: " << res.resourceID << endl; // print out the resource ID
@@ -75,6 +80,7 @@ bool handleInput(int input, ResourceManager& resourceManager, ReservationManager
       viewWaitingLists(resourceManager); // handle getting a resource and printing it's waiting list
       return true;
     case 5: // Undo Cancellation
+      reservationManager.Restore();
       cout << "Restored reservation " << endl; // not implemented yet
       return true;
     case 6: // Search Reservations
@@ -87,10 +93,10 @@ bool handleInput(int input, ResourceManager& resourceManager, ReservationManager
     case 8: // Generate Report; not yet implemented
       return true;
     case 9:
-      return false; // return false to escape input loop (exit program)
-    case 10:
-      reservationManager.PrintList();
+      reservationManager.PrintList(); // print all reservations
       return true;
+    case 10: // exit program
+      return false; // return false to escape input loop (exit program)
     default:
         cout << "Input not recognized!!" << endl;
       return true; // return true to loop again
@@ -107,7 +113,8 @@ void printMenu() {
   cout << "6. Search Reservations" << endl;
   cout << "7. Sort Resources" << endl;
   cout << "8. Generate Report" << endl;
-  cout << "9. Exit" << endl;
+  cout << "9. View Active Reservations" << endl;
+  cout << "10. Exit" << endl;
   cout << endl << "Selection > ";
 }
 

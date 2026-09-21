@@ -81,7 +81,7 @@ void ResourceManager::LoadFromFile() { // load from file
         } else if (availability == "Unavailable") { 
             available = false;
         } else {
-            cout << "Was unable to read availability ( " << availability << " ) for " << id << endl;
+            // cout << "Was unable to read availability ( " << availability << " ) for " << id << endl;
         }
 
         Resource resource(id, name, type, available); // create a new resource object

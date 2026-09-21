@@ -65,7 +65,6 @@ void ReservationManager::Create(int ID, string studentID, string studentName, st
     mostRecentID = ID; // this ID is now the most recent
 
     reservations.push_back(res); // append to list of reservations
-    cout << "added reservation for " << studentName << " with ID " <<  ID << endl;
 }
 
 void ReservationManager::Create(string studentID, string studentName, string resourceID, string date) { // creates a new reservation if we don't already have an ID
@@ -95,6 +94,11 @@ void ReservationManager::Cancel(int ID) { // find the reservation in the list, r
 void ReservationManager::Restore() { // pop top of stack and add to the end of list
     Reservation* restored = canceled.top(); // get the element on top
     
+    if (restored == nullptr) {
+        cout << "There are no canceled reservations to restore." << endl;
+        return;
+    }
+
     reservations.push_back(*restored); // append the element to the end of the list
 
     canceled.pop(); // pop it off the top of the cancelled stack
