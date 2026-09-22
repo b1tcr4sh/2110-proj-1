@@ -11,7 +11,7 @@
 
 class ReservationManager {
     public:
-         ReservationManager(ResourceManager* manager);
+        ReservationManager(ResourceManager* manager);
 
         void LoadFromFile(); // load reservations from file and place on queue
         void PrintList(); // print out the queue

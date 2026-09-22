@@ -14,7 +14,7 @@ class Reservation {
         string date; // date of reservation creation
 
         Reservation(int ID, string studentID, string studentName, string resourceID, string date);
-        bool operator==(const Reservation& res);sss
+        bool operator==(const Reservation& res);
 };
 
 #endif

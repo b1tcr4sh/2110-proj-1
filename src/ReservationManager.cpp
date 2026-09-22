@@ -51,9 +51,9 @@ void ReservationManager::PrintList() { // iterate through the list and print out
     }
 }
 
-void ReservationManager::Create(int ID, string studentID, string studentName, string resourceID, string date) { // creates a new reservation and enqueues it
+void ReservationManager::Create(int ID, string studentID, string studentName, string resourceID, string date) { // creates a new reservation and enqueues it    
     Reservation res(ID, studentID, studentName, resourceID, date); // create new reservation
-    reservations.push_back(res); // append to list of reservations; idk why this isn't working
+    reservations.push_back(res); // append to list of reservations
     
     Resource* resource = resourceManager->FindByID(resourceID);  // find the resource
 
@@ -85,6 +85,7 @@ Reservation ReservationManager::Search(int ID) { // search for a reservation by 
 
 void ReservationManager::Cancel(int ID) { // find the reservation in the list, remove it from the list, and push it onto the stack
     Reservation res = Search(ID); // find the reservation
+    cout << "found reservation " << res.ID << endl;
 
     canceled.push(res); // push it onto the stack for cancelled reservations
     reservations.remove(res); // remove it from the list of reservations
