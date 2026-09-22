@@ -53,7 +53,8 @@ void ReservationManager::PrintList() { // iterate through the list and print out
 
 void ReservationManager::Create(int ID, string studentID, string studentName, string resourceID, string date) { // creates a new reservation and enqueues it
     Reservation res(ID, studentID, studentName, resourceID, date); // create new reservation
-
+    reservations.push_back(res); // append to list of reservations; idk why this isn't working
+    
     Resource* resource = resourceManager->FindByID(resourceID);  // find the resource
 
     if (resource->available) { 
@@ -63,8 +64,6 @@ void ReservationManager::Create(int ID, string studentID, string studentName, st
     }
 
     mostRecentID = ID; // this ID is now the most recent
-
-    reservations.push_back(res); // append to list of reservations
 }
 
 void ReservationManager::Create(string studentID, string studentName, string resourceID, string date) { // creates a new reservation if we don't already have an ID
@@ -87,19 +86,19 @@ Reservation ReservationManager::Search(int ID) { // search for a reservation by 
 void ReservationManager::Cancel(int ID) { // find the reservation in the list, remove it from the list, and push it onto the stack
     Reservation res = Search(ID); // find the reservation
 
-    canceled.push(&res); // push it onto the stack for cancelled reservations
+    canceled.push(res); // push it onto the stack for cancelled reservations
     reservations.remove(res); // remove it from the list of reservations
 } 
 
 void ReservationManager::Restore() { // pop top of stack and add to the end of list
-    Reservation* restored = canceled.top(); // get the element on top
+    Reservation restored = canceled.top(); // get the element on top
     
-    if (restored == nullptr) {
-        cout << "There are no canceled reservations to restore." << endl;
-        return;
-    }
+    // if (restored == NULL) {
+    //     cout << "There are no canceled reservations to restore." << endl;
+    //     return;
+    // }
 
-    reservations.push_back(*restored); // append the element to the end of the list
+    reservations.push_back(restored); // append the element to the end of the list
 
     canceled.pop(); // pop it off the top of the cancelled stack
 } 

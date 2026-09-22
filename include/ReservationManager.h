@@ -23,7 +23,7 @@ class ReservationManager {
         Reservation* FindByStudent(string studentID); // find all reservations from a student by ID and return an array
     private:
         list<Reservation> reservations; // linked list that stores all reservations
-        stack<Reservation*> canceled; // stack of canceled reservations -- most recent cancellation is on top (only the most recent can be restored/popped)
+        stack<Reservation> canceled; // stack of canceled reservations -- most recent cancellation is on top (only the most recent can be restored/popped)
 
         int mostRecentID; // ID of most recent reservation; used for generating new IDs for reservations when they are created
 
