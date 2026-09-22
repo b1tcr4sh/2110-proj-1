@@ -9,7 +9,7 @@ Reservation::Reservation(int ID, string studentID, string studentName, string re
 }
 
 bool Reservation::operator==(const Reservation& r) { // == operator overlaod for list::remove()
-    if (ID == r.ID && studentID == r.studentID && studentName == r.studentID && resourceID == r.resourceID && date == r.date) {
+    if (ID == r.ID && studentID == r.studentID && studentName == r.studentName && resourceID == r.resourceID && date == r.date) {
         return true; // if all values are the same, they are the same
     } else {
         return false;

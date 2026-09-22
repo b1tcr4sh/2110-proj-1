@@ -11,8 +11,8 @@ Resource::Resource(string id, string name, ResourceType type, bool available) { 
     this->available = available;
 }
 
-void Resource::addToWaitingList(string studentId){ // append to waiting list queue
-    WaitingList.push(studentId);
+void Resource::addToWaitingList(string studentName){ // append to waiting list queue
+        WaitingList.emplace(studentName);
 }
 
 void Resource::removeFromWaitingList(){ // remove the person at the front of the waiting list
