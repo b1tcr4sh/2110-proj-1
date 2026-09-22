@@ -9,7 +9,7 @@ using namespace std;
 enum ResourceType { // enum for types of resources
   study_room,
   laptop,
-  calculator,
+  calculator
   lab_equipment,
   tutoring_appt
 };
