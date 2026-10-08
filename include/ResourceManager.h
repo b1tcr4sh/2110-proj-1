@@ -15,5 +15,8 @@ class ResourceManager { // manages loading and storing the list of available res
         Resource* FindByID(string ID); // finds the resource with ID and returns it
     private:
         vector<Resource> existingResources; // vector containing all existing resources
+
+        void MergeSort(int left, int right);
+        void Merge(int left, int middle, int right);
 };
 #endif

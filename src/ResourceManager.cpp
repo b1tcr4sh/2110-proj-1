@@ -37,7 +37,68 @@ void ResourceManager::PrintList() { // print the list of resources
     }
 }
 
-bool ResourceManager::Sort() {return 0;} // not implemented yet
+bool ResourceManager::Sort() {
+    if (existingResources.empty()) {
+        return false;
+
+    }
+    
+    MergeSort(0, existingResources.size() - 1);
+    return true;
+
+}
+
+void ResourceManager::MergeSort(int left, int right) {
+    if (left >= right) {
+        return;
+
+    }
+    int middle = left + (right - left) / 2;
+    MergeSort(left, middle);
+    MergeSort(middle + 1, right);
+
+    Merge(left, middle, right);
+
+}
+
+void ResourceManager::Merge(int left, int middle, int right) {
+    vector<Resource> temp;
+
+    int i = left;
+    int j = middle + 1;
+    
+
+    while (i <= middle && j <= right) {
+        if (existingResources.at(i).name <= existingResources.at(j).name) {
+            temp.push_back(existingResources.at(i));
+            i++;
+
+        }
+
+        else {
+            temp.push_back(existingResources.at(j));
+            j++;
+
+        }
+    }
+
+    while (i <= middle) {
+        temp.push_back(existingResources.at(i));
+        i++;
+
+    }
+
+    while (j <= right) {
+        temp.push_back(existingResources.at(j));
+        j++;
+
+    }
+
+    for (int k = 0; k < temp.size(); k++) {
+        existingResources.at(left + k) = temp.at(k);
+
+    }
+}
 
 void ResourceManager::LoadFromFile() { // load from file
     ifstream file("data/resources.txt"); // create file stream
