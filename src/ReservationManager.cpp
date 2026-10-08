@@ -51,6 +51,20 @@ void ReservationManager::PrintList() { // iterate through the list and print out
     }
 }
 
+void ReservationManager::PrintActiveReservations() {
+    cout << "Active Reservations: " << endl;
+
+    for (list<Reservation>::iterator it = reservations.begin();
+        it != reservations.end();
+        it++) {
+
+        cout << it->ID << ": " << it->date << endl;
+        cout << " Resource: " << it->resourceID << endl;
+        cout << " Student: " << it->studentName << " | " << it->studentID << endl;
+
+    }
+}
+
 void ReservationManager::Create(int ID, string studentID, string studentName, string resourceID, string date) { // creates a new reservation and enqueues it    
     Reservation res(ID, studentID, studentName, resourceID, date); // create new reservation
     reservations.push_back(res); // append to list of reservations

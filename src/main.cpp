@@ -93,7 +93,7 @@ bool handleInput(int input, ResourceManager* resourceManager, ReservationManager
     case 8: // Generate Report; not yet implemented
       return true;
     case 9:
-      reservationManager->PrintList(); // print all reservations
+      reservationManager->PrintActiveReservations(); // print active reservations
       return true;
     case 10: // exit program
       return false; // return false to escape input loop (exit program)
