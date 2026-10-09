@@ -20,14 +20,10 @@ void Resource::addToWaitingList(string studentName, string studentID){ // append
     Student* stu = new Student(studentName, studentID); // create a new student
 
     if (waitingListTop != NULL) {// if there are already elements in the stack (stack is not empty and head/tail are initialized),
-        cout << waitingListTop->name << " is at the top" << endl;
-
-        cout << "adding " << stu->name << " to list" << endl;
         stu->next = waitingListTop; // then set the new student to point to the current head (prepend to front of list/top of stack)
         waitingListTop = stu; // then set the new student as the head
 
     } else { // if the stack is not initialized (head/tail are null),
-        cout << "init list with " << stu->name << endl;
         waitingListTop = stu; // then new element is the head
         waitingListBottom = waitingListTop; // and the tail
     } 
