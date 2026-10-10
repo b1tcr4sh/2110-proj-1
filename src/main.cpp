@@ -31,9 +31,9 @@ void createReservationFromUser(ReservationManager* manager, ResourceManager* res
   cout << "What is today's date? (MM/DD/YYYY) > ";
   cin >> date; // get date from user
 
-  manager->Create(studentID, studentName, resourceID, date); // use all of these to create a reservation
+  int id = manager->Create(studentID, studentName, resourceID, date); // use all of these to create a reservation
 
-  cout << "added reservation for " << studentName << endl;
+  cout << endl << "added reservation for " << studentName << " with id " << id << endl;
 }
 
 void cancelReservationFromUser(ReservationManager* manager) {
@@ -43,7 +43,7 @@ void cancelReservationFromUser(ReservationManager* manager) {
 
   manager->Cancel(ID); // cancel it
 
-  cout << "Cancelled reservation." << endl << "Added to cancellation history." << endl;
+  cout << endl << "Cancelled reservation " << ID << endl << "Added to cancellation history." << endl;
 }
 
 void searchReservationFromUser(ReservationManager* manager) {
@@ -51,16 +51,40 @@ void searchReservationFromUser(ReservationManager* manager) {
   cout << "ID of reservation you are looking for > ";
   cin >> ID; // get reservation ID
 
-  Reservation res = manager->Search(ID); // find it by ID
+  Reservation* res = manager->Search(ID); // find it by ID
 
-  if (res.ID == -1) {
+  if (res->ID == -1) {
     cout << "Not found..." << endl;
     return;
   }
 
-  cout << res.ID << ": " << res.date << endl; // print out the ID and date
-  cout << " Resource: " << res.resourceID << endl; // print out the resource ID
-  cout << " Student: " << res.studentName << " | " << res.studentID; // print out student info
+  cout << endl << res->ID << ": " << res->date << endl; // print out the ID and date
+  cout << " Resource: " << res->resourceID << endl; // print out the resource ID
+  cout << " Student: " << res->studentName << " | " << res->studentID << endl; // print out student info
+}
+
+void peekCancellation(ReservationManager* man) {
+  Reservation res = man->PeekMostRecentCancellation();
+
+  if (res.ID == -1) {
+    cout << endl << "There are no cancellations to view..." << endl;
+    return;
+  }
+
+  cout << endl << "Reservation " << res.ID << " | " << res.date << endl;
+  cout << " for: " << res.studentName << " | " << res.studentID << endl;
+  cout << " requesting: " << res.resourceID << endl;
+}
+
+void restoreReservation(ReservationManager* man) {
+  Reservation res = man->Restore();
+
+  if (res.ID == -1) { // if the restore function could not find a reservation
+    cout << endl << "There are no cancellations to restore..." << endl;
+    return;
+  }
+
+  cout << "Restored reservation " << res.ID << endl; // not implemented yet
 }
 
 bool handleInput(int input, ResourceManager* resourceManager, ReservationManager* reservationManager) {
@@ -80,8 +104,7 @@ bool handleInput(int input, ResourceManager* resourceManager, ReservationManager
       viewWaitingLists(resourceManager); // handle getting a resource and printing it's waiting list
       return true;
     case 5: // Undo Cancellation
-      reservationManager->Restore();
-      cout << "Restored reservation " << endl; // not implemented yet
+      restoreReservation(reservationManager);
       return true;
     case 6: // Search Reservations
       searchReservationFromUser(reservationManager); // handle searching for a reservation and printing it's info
@@ -96,7 +119,10 @@ bool handleInput(int input, ResourceManager* resourceManager, ReservationManager
     case 9:
       reservationManager->PrintActiveReservations(); // print active reservations
       return true;
-    case 10: // exit program
+    case 10:
+      peekCancellation(reservationManager);
+      return true;
+    case 11: // exit program
       return false; // return false to escape input loop (exit program)
     default:
         cout << "Input not recognized!!" << endl;
@@ -115,7 +141,8 @@ void printMenu() {
   cout << "7. Sort Resources" << endl;
   cout << "8. Generate Report" << endl;
   cout << "9. View Active Reservations" << endl;
-  cout << "10. Exit" << endl;
+  cout << "10. View Last Cancellation" << endl;
+  cout << "11. Exit" << endl;
   cout << endl << "Selection > ";
 }
 

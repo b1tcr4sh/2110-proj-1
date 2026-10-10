@@ -7,8 +7,8 @@ Reservation.o: include/Reservation.h src/Reservation.cpp
 ReservationManager.o: ResourceManager.o Reservation.o include/ReservationManager.h src/ReservationManager.cpp 
 	g++ -Wall -c include/ReservationManager.h src/ReservationManager.cpp
 
-Resource.o: include/Resource.h src/Resource.cpp 
-	g++ -Wall -c include/Resource.h src/Resource.cpp
+Resource.o: include/Resource.h include/Student.h src/Resource.cpp 
+	g++ -Wall -c include/Resource.h include/Student.h src/Resource.cpp
 
 ResourceManager.o: Resource.o include/ResourceManager.h src/ResourceManager.cpp
 	g++ -Wall -c include/ResourceManager.h src/ResourceManager.cpp 

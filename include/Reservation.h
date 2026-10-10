@@ -15,6 +15,8 @@ class Reservation {
 
         Reservation(int ID, string studentID, string studentName, string resourceID, string date);
         bool operator==(const Reservation& res);
+
+        Reservation* next;
 };
 
 #endif
