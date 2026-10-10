@@ -9,7 +9,7 @@ class ResourceManager { // manages loading and storing the list of available res
     public:
         Resource* ResourceByID(string id); // search for resource by id
         void PrintList(); // what it says
-        bool Sort(); // sort by id??
+        bool Sort(); // sort by name
         void LoadFromFile(); // loads all the resources from the file into the vector
         void GenerateReport(); // generates a report of all resources
 

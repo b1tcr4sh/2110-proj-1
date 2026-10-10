@@ -14,26 +14,7 @@ void ResourceManager::PrintList() { // print the list of resources
     for (unsigned int i = 0; i < existingResources.size(); i++) { // iterate through the list
         Resource e = existingResources.at(i);
 
-        string type;
-        switch (e.type) {
-            case study_room:
-                type = "Study Room";
-                break;
-            case laptop:
-                type = "Laptop";
-                break;
-            case calculator:
-                type = "Calculator";
-                break;
-            case lab_equipment:
-                type = "Lab Equipment";
-                break;
-            case tutoring_appt:
-                type = "Tutoring Appointment";
-                break;
-        }
-
-        cout << e.id << " | " << e.name << " | " << type << " | " << (e.available ? "available" : "unavailable") << endl;
+        cout << e.id << " | " << e.name << " | " << e.type << " | " << (e.available ? "available" : "unavailable") << endl;
     }
 }
 
@@ -94,7 +75,7 @@ void ResourceManager::Merge(int left, int middle, int right) {
 
     }
 
-    for (int k = 0; k < temp.size(); k++) {
+    for (unsigned int k = 0; k < temp.size(); k++) {
         existingResources.at(left + k) = temp.at(k);
 
     }
@@ -104,7 +85,7 @@ void ResourceManager::LoadFromFile() { // load from file
     ifstream file("data/resources.txt"); // create file stream
 
 
-    while (!file.eof()) {
+    while (!file.eof()) {        
         string line;
         getline(file, line); // read 1 line from file
 
@@ -124,17 +105,6 @@ void ResourceManager::LoadFromFile() { // load from file
         string availability;
         getline(stream, availability, '|'); // get availability of resource; delimited by "|"
 
-        // handle parsing the type into the enum
-        ResourceType type; 
-        if (typeString == "Study Room") type = study_room;
-        else if (typeString == "Laptop") type = laptop;
-        else if (typeString == "Calculator") type = calculator;
-        else if (typeString == "Lab Equipment") type = lab_equipment;
-        else if (typeString == "Tutoring Appointment") type = tutoring_appt;
-        else {
-            cout << "Was unable to read resource type ( " << type << " ) for " << id << endl;
-        }
-
         // handle parsing availability into bool
         bool available;
         if (availability == "Available") { 
@@ -142,10 +112,10 @@ void ResourceManager::LoadFromFile() { // load from file
         } else if (availability == "Unavailable") { 
             available = false;
         } else {
-            // cout << "Was unable to read availability ( " << availability << " ) for " << id << endl;
+            cout << "Was unable to read availability ( " << availability << " ) for " << id << endl;
         }
 
-        Resource resource(id, name, type, available); // create a new resource object
+        Resource resource(id, name, typeString, available); // create a new resource object
 
         existingResources.push_back(resource); // push it into the vector
 
@@ -163,19 +133,20 @@ Resource* ResourceManager::FindByID(string ID) { // find a resource in the vecto
     return nullptr; // if we were unable to find it, return null; for error handling
 }
 
-    void ResourceManager::GenerateReport() {
-        cout << "==== SYSTEM REPORTS ====" << endl;
+void ResourceManager::GenerateReport() {
+    cout << "==== SYSTEM REPORTS ====" << endl;
 
-        // resource utilization section:
-        // the resource and the how many reservations the item has
+    // resource utilization section:
+    // the resource and the how many reservations the item has
 
-        cout << "==== Resoruce Utillization ==== " << endl;
+    cout << "==== Resoruce Utillization ==== " << endl;
 
-         // the most requested resoruces 
-        cout << "==== The most Requested Resoruces ==== " << endl;
+        // the most requested resoruces 
+    cout << "==== The most Requested Resoruces ==== " << endl;
 
 
-        // waiting-list stats section:
-        // number of stutdents waiting for the resoruce given
-        // report needs to be gernerated by using the wait listing data already given
-        cout << "Waiting List Stats: " << endl;
+    // waiting-list stats section:
+    // number of stutdents waiting for the resoruce given
+    // report needs to be gernerated by using the wait listing data already given
+    cout << "Waiting List Stats: " << endl;
+}

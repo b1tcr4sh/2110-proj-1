@@ -9,7 +9,7 @@ Student::Student(string _name, string _id) {
     id = _id;
 }
 
-Resource::Resource(string id, string name, ResourceType type, bool available) { // constructor to pass values
+Resource::Resource(string id, string name, string type, bool available) { // constructor to pass values
     this->id = id;
     this->name = name;
     this->type = type;
