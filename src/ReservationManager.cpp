@@ -38,34 +38,23 @@ void ReservationManager::LoadFromFile() { // loads reservation data line-by-line
     }
 }
 
-void ReservationManager::PrintList() { // iterate through the list and print out every element
-    list<Reservation>::iterator it = reservations.begin();
-
-    cout << "Reservation List: " << endl;
-
-    // step through list
-    for (it = reservations.begin(); it != reservations.end(); it++) {
-        cout << it->ID << ": " << it->date << endl;
-        cout << " Resource: " << it->resourceID << endl;
-        cout << " Student: " << it->studentName << " | " << it->studentID << endl;
-    }
-}
-
 void ReservationManager::PrintActiveReservations() {
     cout << "Active Reservations: " << endl;
+    Reservation* temp = head; // get the top
 
-    for (list<Reservation>::iterator it = reservations.begin();
-        it != reservations.end();
-        it++) {
+    do {
+        cout << temp->ID << ": " << temp->date << endl;
+        cout << " Resource: " << temp->resourceID << endl;
+        cout << " Student: " << temp->studentName << " | " << temp->studentID << endl;
 
-        cout << it->ID << ": " << it->date << endl;
-        cout << " Resource: " << it->resourceID << endl;
-        cout << " Student: " << it->studentName << " | " << it->studentID << endl;
-
-    }
+        if (temp->next == NULL) { // if the next element doesn't exist (this should be redundant), 
+            return; // then exist early so we don't iterate
+        }
+        temp = temp->next; // otherwise, step to the next element
+    } while (temp != tail);
 }
 
-void ReservationManager::Create(int ID, string studentID, string studentName, string resourceID, string date) { // creates a new reservation and enqueues it    
+int ReservationManager::Create(int ID, string studentID, string studentName, string resourceID, string date) { // creates a new reservation and enqueues it    
     Reservation* res = new Reservation(ID, studentID, studentName, resourceID, date); // create new reservation
     // reservations.push_back(res); // append to list of reservations
     addToList(res); // append to the list of reservations
@@ -79,24 +68,14 @@ void ReservationManager::Create(int ID, string studentID, string studentName, st
     }
 
     mostRecentID = ID; // this ID is now the most recent
+    return ID;
 }
 
-void ReservationManager::Create(string studentID, string studentName, string resourceID, string date) { // creates a new reservation if we don't already have an ID
-    Create(mostRecentID + 1, studentID, studentName, resourceID, date); // sets id to 1 + whatever the last ID was so IDs count up
+int ReservationManager::Create(string studentID, string studentName, string resourceID, string date) { // creates a new reservation if we don't already have an ID
+    return Create(mostRecentID + 1, studentID, studentName, resourceID, date); // sets id to 1 + whatever the last ID was so IDs count up
 }
 
 Reservation* ReservationManager::Search(int ID) { // search for a reservation by it's ID
-    // list<Reservation>::iterator it = reservations.begin();
-
-    // // step through list
-    // for (it = reservations.begin(); it != reservations.end(); it++) {
-    //     if (it->ID == ID) {
-    //         return *it; // if ID matches, then return it
-    //     }
-    // }
-
-    // return *new Reservation(-1, "null", "null", "null", "null"); // if not, then return an empty reservation; this can be used for error handling
-
     Reservation* temp = head;
 
     while (temp != tail) { // until the correct element is found, or we reach the end
@@ -115,22 +94,18 @@ void ReservationManager::Cancel(int ID) { // find the reservation in the list, r
     Reservation* res = Search(ID); // find the reservation
     cout << "found reservation " << res->ID << endl;
 
-    // canceled.push(res); // push it onto the stack for cancelled reservations
-    // reservations.remove(res); // remove it from the list of reservations
-    removeFromList(res);
+    res = removeFromList(res); // remove it from the list of reservations
+    pushCanceled(res); // push it onto the stack for cancelled reservations
 } 
 
 void ReservationManager::Restore() { // pop top of stack and add to the end of list
-    Reservation restored = canceled.top(); // get the element on top
-    
-    // if (restored == NULL) {
-    //     cout << "There are no canceled reservations to restore." << endl;
-    //     return;
-    // }
+    if (canceledTop == NULL) {
+        cout << "There are no canceled reservations to restore." << endl;
+        return;
+    }
 
-    reservations.push_back(restored); // append the element to the end of the list
-
-    canceled.pop(); // pop it off the top of the cancelled stack
+    Reservation* res = popCanceled(); // pop off the top of the cancelled stack
+    addToList(res); // append it to the end of the list
 } 
 
 void ReservationManager::addToList(Reservation* res) {
@@ -182,4 +157,42 @@ Reservation* ReservationManager::removeFromList(Reservation* res) {
 
     cout << res->ID << " not found in list..." << endl;
     return NULL;
+}
+
+void ReservationManager::pushCanceled(Reservation* res) {
+    if (canceledTop != NULL) {// if there are already elements in the stack (stack is not empty and head/tail are initialized),
+        res->next = canceledTop; // then set the new element to point to the current head (prepend to front of list/top of stack)
+        canceledTop = res; // then set the new element as the head
+
+    } else { // if the stack is not initialized (head/tail are null),
+        canceledTop = res; // then new element is the head
+        canceledBottom = canceledTop; // and the tail
+    } 
+    canceledLength++; // regardless, the stack is one larger
+}
+
+Reservation* ReservationManager::popCanceled() {
+    Reservation* temp = canceledTop; // store the top of the stack
+
+    if (temp == NULL) {  // if the list is empty (not initiailized),
+        cout << "The stack of cancellations is empty" << endl;
+        return NULL;
+    }
+
+    if (temp->next == NULL) { // if there is only 1 item in the list,
+        canceledTop = NULL; // deinitialize the stack by setting the head to point to nothing
+        canceledBottom = NULL; // and tail
+        return temp; // then exit early and return
+    }
+
+    // if there are more elements in the list ....
+    canceledTop = temp->next; // then set head to the next element in the stack (the top's next)
+    canceledLength--; // and make the list is one smaller
+
+    temp->next = NULL; // exclude from the list 
+    return temp; // and return it
+}
+
+Reservation ReservationManager::PeekMostRecentCancellation() {
+    return *canceledTop; // just return a copy of the top of the stack
 }

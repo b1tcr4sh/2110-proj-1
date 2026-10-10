@@ -31,9 +31,9 @@ void createReservationFromUser(ReservationManager* manager, ResourceManager* res
   cout << "What is today's date? (MM/DD/YYYY) > ";
   cin >> date; // get date from user
 
-  manager->Create(studentID, studentName, resourceID, date); // use all of these to create a reservation
+  int id = manager->Create(studentID, studentName, resourceID, date); // use all of these to create a reservation
 
-  cout << "added reservation for " << studentName << endl;
+  cout << "added reservation for " << studentName << " with id " << id << endl;
 }
 
 void cancelReservationFromUser(ReservationManager* manager) {
