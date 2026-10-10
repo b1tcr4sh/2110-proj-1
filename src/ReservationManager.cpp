@@ -66,8 +66,9 @@ void ReservationManager::PrintActiveReservations() {
 }
 
 void ReservationManager::Create(int ID, string studentID, string studentName, string resourceID, string date) { // creates a new reservation and enqueues it    
-    Reservation res(ID, studentID, studentName, resourceID, date); // create new reservation
-    reservations.push_back(res); // append to list of reservations
+    Reservation* res = new Reservation(ID, studentID, studentName, resourceID, date); // create new reservation
+    // reservations.push_back(res); // append to list of reservations
+    addToList(res); // append to the list of reservations
     
     Resource* resource = resourceManager->FindByID(resourceID);  // find the resource
 
@@ -84,25 +85,39 @@ void ReservationManager::Create(string studentID, string studentName, string res
     Create(mostRecentID + 1, studentID, studentName, resourceID, date); // sets id to 1 + whatever the last ID was so IDs count up
 }
 
-Reservation ReservationManager::Search(int ID) { // search for a reservation by it's ID
-    list<Reservation>::iterator it = reservations.begin();
+Reservation* ReservationManager::Search(int ID) { // search for a reservation by it's ID
+    // list<Reservation>::iterator it = reservations.begin();
 
-    // step through list
-    for (it = reservations.begin(); it != reservations.end(); it++) {
-        if (it->ID == ID) {
-            return *it; // if ID matches, then return it
+    // // step through list
+    // for (it = reservations.begin(); it != reservations.end(); it++) {
+    //     if (it->ID == ID) {
+    //         return *it; // if ID matches, then return it
+    //     }
+    // }
+
+    // return *new Reservation(-1, "null", "null", "null", "null"); // if not, then return an empty reservation; this can be used for error handling
+
+    Reservation* temp = head;
+
+    while (temp != tail) { // until the correct element is found, or we reach the end
+        if (temp->next->ID == ID) { // if the next element is the correct element,
+            return temp->next; // then we can return it
         }
-    }
 
-    return *new Reservation(-1, "null", "null", "null", "null"); // if not, then return an empty reservation; this can be used for error handling
+        temp = temp->next; // iterate through elements
+    } 
+
+    cout << ID << " not found in list..." << endl;
+    return NULL;
 }
 
 void ReservationManager::Cancel(int ID) { // find the reservation in the list, remove it from the list, and push it onto the stack
-    Reservation res = Search(ID); // find the reservation
-    cout << "found reservation " << res.ID << endl;
+    Reservation* res = Search(ID); // find the reservation
+    cout << "found reservation " << res->ID << endl;
 
-    canceled.push(res); // push it onto the stack for cancelled reservations
-    reservations.remove(res); // remove it from the list of reservations
+    // canceled.push(res); // push it onto the stack for cancelled reservations
+    // reservations.remove(res); // remove it from the list of reservations
+    removeFromList(res);
 } 
 
 void ReservationManager::Restore() { // pop top of stack and add to the end of list
@@ -117,3 +132,40 @@ void ReservationManager::Restore() { // pop top of stack and add to the end of l
 
     canceled.pop(); // pop it off the top of the cancelled stack
 } 
+
+void ReservationManager::addToList(Reservation* res) {
+        if (head != NULL) { // if list already has elements in it,
+            tail->next = res; // then append the element to the end of list
+            tail = res; // and make it the end of the list
+        } else { // if the list is empty,
+            head = res; // then make the new element the first in the list
+            tail = head; // and last
+        }
+        listLength++; // list is one longer
+}
+
+Reservation* ReservationManager::removeFromList(Reservation* res) {
+    Reservation* temp = head;
+
+     if (temp->next == NULL) {
+            // list is empty
+            cout << "list is empty, cannot remove" << endl;
+            return NULL;
+        }
+
+    while (temp != tail) { // until the correct element is found, or we reach the end
+        if (temp->next->ID == res->ID) { // if the next element is the correct element,
+
+            if (temp->next != tail) { // if the found element is not the tail,
+                temp->next = temp->next->next; // then it has a predecessor, and we can repair the reference
+            } 
+            res->next = NULL; // and regardless, the found element should not point into the list
+            return res; // then we can return it, so it can be pushed onto the stack
+        }
+
+        temp = temp->next; // iterate through elements
+    } 
+
+    cout << res->ID << " not found in list..." << endl;
+    return NULL;
+}

@@ -51,16 +51,16 @@ void searchReservationFromUser(ReservationManager* manager) {
   cout << "ID of reservation you are looking for > ";
   cin >> ID; // get reservation ID
 
-  Reservation res = manager->Search(ID); // find it by ID
+  Reservation* res = manager->Search(ID); // find it by ID
 
-  if (res.ID == -1) {
+  if (res->ID == -1) {
     cout << "Not found..." << endl;
     return;
   }
 
-  cout << res.ID << ": " << res.date << endl; // print out the ID and date
-  cout << " Resource: " << res.resourceID << endl; // print out the resource ID
-  cout << " Student: " << res.studentName << " | " << res.studentID; // print out student info
+  cout << res->ID << ": " << res->date << endl; // print out the ID and date
+  cout << " Resource: " << res->resourceID << endl; // print out the resource ID
+  cout << " Student: " << res->studentName << " | " << res->studentID; // print out student info
 }
 
 bool handleInput(int input, ResourceManager* resourceManager, ReservationManager* reservationManager) {
