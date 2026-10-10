@@ -98,14 +98,16 @@ void ReservationManager::Cancel(int ID) { // find the reservation in the list, r
     pushCanceled(res); // push it onto the stack for cancelled reservations
 } 
 
-void ReservationManager::Restore() { // pop top of stack and add to the end of list
+Reservation ReservationManager::Restore() { // pop top of stack and add to the end of list
     if (canceledTop == NULL) {
         cout << "There are no canceled reservations to restore." << endl;
-        return;
+        return Reservation(-1, "", "", "", "");
     }
 
     Reservation* res = popCanceled(); // pop off the top of the cancelled stack
     addToList(res); // append it to the end of the list
+
+    return *res;
 } 
 
 void ReservationManager::addToList(Reservation* res) {
@@ -194,5 +196,9 @@ Reservation* ReservationManager::popCanceled() {
 }
 
 Reservation ReservationManager::PeekMostRecentCancellation() {
-    return *canceledTop; // just return a copy of the top of the stack
+    if (canceledTop == NULL) { // if the list is empty, return a false reservation
+        return Reservation(-1, "none", "none", "none", "none"); 
+    }
+
+    return *canceledTop; // otherwise, just return a copy of the top of the stack
 }

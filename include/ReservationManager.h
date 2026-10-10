@@ -22,7 +22,7 @@ class ReservationManager {
         // Reservation* FindByStudent(string studentID); // find all reservations from a student by ID and return an array
 
         void Cancel(int ID); // finds reservation with ID in list and push it onto stack
-        void Restore(); // pops top reservation off stack and restores it to the **back of the queue** ; returns ID of restored reservation
+        Reservation Restore(); // pops top reservation off stack and restores it to the **back of the queue** ; returns ID of restored reservation
         Reservation PeekMostRecentCancellation(); // peek the top of stack (returns a copy instead of a pointer so that it can't fuck up the stack)
 
         int listLength = 0;
