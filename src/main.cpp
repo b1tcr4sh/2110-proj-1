@@ -91,6 +91,7 @@ bool handleInput(int input, ResourceManager* resourceManager, ReservationManager
       resourceManager->PrintList(); // print them out
       return true;
     case 8: // Generate Report; not yet implemented
+      resourceManager->GenerateReport(); // generate a report of all resources
       return true;
     case 9:
       reservationManager->PrintActiveReservations(); // print active reservations

@@ -162,3 +162,11 @@ Resource* ResourceManager::FindByID(string ID) { // find a resource in the vecto
     cout << "Was unabe to find resource " << ID << endl; 
     return nullptr; // if we were unable to find it, return null; for error handling
 }
+
+    void ResourceManager::GenerateReport() {
+        cout << "SYSTEM REPORT" << endl;
+        cout << "=============" << endl;
+        for (const auto& resource : existingResources) {
+            cout << "ID: " << resource.id << ", Name: " << resource.name << ", Type: " << resource.type << ", Available: " << (resource.available ? "Yes" : "No") << endl;
+        }
+    }
