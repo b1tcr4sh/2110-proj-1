@@ -15,7 +15,7 @@ void viewWaitingLists(ResourceManager* manager) {
 
 void createReservationFromUser(ReservationManager* manager, ResourceManager* resourceManager) {
   string resourceID;
-  cout << "ID of resource to book > ";
+  cout << endl << "ID of resource to book > ";
   cin >> resourceID; // get resource ID from user
 
   cin.ignore();
@@ -38,7 +38,7 @@ void createReservationFromUser(ReservationManager* manager, ResourceManager* res
 
 void cancelReservationFromUser(ReservationManager* manager) {
   int ID;
-  cout << "ID of reservation to cancel > ";
+  cout << endl << "ID of reservation to cancel > ";
   cin >> ID; // get reservation ID
 
   manager->Cancel(ID); // cancel it
@@ -48,7 +48,7 @@ void cancelReservationFromUser(ReservationManager* manager) {
 
 void searchReservationFromUser(ReservationManager* manager) {
   int ID;
-  cout << "ID of reservation you are looking for > ";
+  cout << endl << "ID of reservation you are looking for > ";
   cin >> ID; // get reservation ID
 
   Reservation* res = manager->Search(ID); // find it by ID

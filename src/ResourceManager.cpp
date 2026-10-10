@@ -9,7 +9,7 @@ using namespace std;
 Resource* ResourceManager::ResourceByID(string id) {return 0;} // not implemented yet
 
 void ResourceManager::PrintList() { // print the list of resources
-    cout << "Resources: " << endl << endl;
+    cout << endl << "Resources: " << endl << endl;
 
     for (unsigned int i = 0; i < existingResources.size(); i++) { // iterate through the list
         Resource e = existingResources.at(i);

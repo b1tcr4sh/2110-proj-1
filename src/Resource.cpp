@@ -53,12 +53,12 @@ void Resource::displayWaitingList() { // iterate through the list and print out 
         return;        
     }
 
-    cout << endl << "Waiting List: " << endl;
+    cout << endl << "Waiting List for " << id << ": " << endl;
 
     Student* temp = waitingListFront; // temporary student variable to hold the one we are currently looking at. Could say this is like an iterator.
 
     for (int i = 0; i < waitingListLength; i++) {
-        cout << "   " << temp->name << ": " << temp->id << endl;
+        cout << "   " << temp->name << " | " << temp->id << endl;
         if (temp != waitingListBack) {
             temp = temp->next; // iterate to the next element if it exists
         }
