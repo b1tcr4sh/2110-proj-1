@@ -6,11 +6,17 @@ using namespace std;
 
 void viewWaitingLists(ResourceManager* manager) {
   string id;
-  cout << "ID of resource to view? > "; 
+  cout << endl << "ID of resource to view? > "; 
   cin >> id; // get ID of resource
 
   Resource* res = manager->FindByID(id); // find resource from ID
-  res->displayWaitingList(); // print out the resource's waiting list
+
+  if (res != NULL) { // if it's found..
+    res->displayWaitingList(); // print out the resource's waiting list
+  } else { // if not found
+    cout << endl << "Was unabe to find resource " << id << endl; 
+    cout << "aborting." << endl; // then abort 
+  }
 }
 
 void createReservationFromUser(ReservationManager* manager, ResourceManager* resourceManager) {
@@ -36,7 +42,8 @@ void createReservationFromUser(ReservationManager* manager, ResourceManager* res
   if (id != -1) {
     cout << endl << "added reservation for " << studentName << " with id " << id << endl;
   } else {
-      cout << "reservation creation aborted." << endl;
+    cout << endl << resourceID << " not found in list..." << endl;
+    cout << "reservation creation aborted." << endl;
   }
 }
 
@@ -45,9 +52,14 @@ void cancelReservationFromUser(ReservationManager* manager) {
   cout << endl << "ID of reservation to cancel > ";
   cin >> ID; // get reservation ID
 
-  manager->Cancel(ID); // cancel it
+  bool success = manager->Cancel(ID); // cancel it
 
-  cout << endl << "Cancelled reservation " << ID << endl << "Added to cancellation history." << endl;
+  if (success) {
+    cout << endl << "Cancelled reservation " << ID << endl << "Added to cancellation history." << endl;
+  } else {
+    cout << endl << ID << " not found..." << endl << "Aborting." << endl;
+  }
+
 }
 
 void searchReservationFromUser(ReservationManager* manager) {
@@ -57,8 +69,9 @@ void searchReservationFromUser(ReservationManager* manager) {
 
   Reservation* res = manager->Search(ID); // find it by ID
 
-  if (res->ID == -1) {
-    cout << "Not found..." << endl;
+  if (res == NULL) {
+    cout << endl << ID << " not found in list..." << endl;
+    cout << "Aborting." << endl;
     return;
   }
 

@@ -95,21 +95,22 @@ Reservation* ReservationManager::Search(int ID) { // search for a reservation by
         temp = temp->next; // iterate through elements
     } 
 
-    cout << ID << " not found in list..." << endl;
     return NULL;
 }
 
-void ReservationManager::Cancel(int ID) { // find the reservation in the list, remove it from the list, and push it onto the stack
+bool ReservationManager::Cancel(int ID) { // find the reservation in the list, remove it from the list, and push it onto the stack
     Reservation* res = Search(ID); // find the reservation
-    cout << "found reservation " << res->ID << endl;
+    if (res == NULL) {
+        return false;
+    }
 
     res = removeFromList(res); // remove it from the list of reservations
     pushCanceled(res); // push it onto the stack for cancelled reservations
+    return true;
 } 
 
 Reservation ReservationManager::Restore() { // pop top of stack and add to the end of list
     if (canceledTop == NULL) {
-        cout << "There are no canceled reservations to restore." << endl;
         return Reservation(-1, "", "", "", "");
     }
 
