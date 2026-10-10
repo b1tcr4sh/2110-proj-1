@@ -147,13 +147,27 @@ void ReservationManager::addToList(Reservation* res) {
 Reservation* ReservationManager::removeFromList(Reservation* res) {
     Reservation* temp = head;
 
-     if (temp->next == NULL) {
-            // list is empty
-            cout << "list is empty, cannot remove" << endl;
-            return NULL;
+    if (temp == NULL) {
+        // list is empty
+        cout << "list is empty, cannot remove" << endl;
+        return NULL;
+    }
+    
+    if (temp->ID == res->ID) { // if the element we're looking to remove is the head,
+        if (temp->next != NULL) { // and if the list is not only one element long,
+            head = temp->next; // then, set the head to the predecessor of the element we're looking for
+            temp->next = NULL; // and exclude it from the list
+            return temp; // then we can return it
+        } else { // otherwise, the head (and tail) is the only element in the list
+            temp->next = NULL; // se we exclude it from the list
+            head = NULL; // and deinitialize the list by making the head null
+            tail = NULL;  // and the tail
+            return temp; // then we can return the removed element
         }
 
-    while (temp != tail) { // until the correct element is found, or we reach the end
+    }
+
+    while (temp != tail) { // Otherwise, loop until the correct element is found, or we reach the end
         if (temp->next->ID == res->ID) { // if the next element is the correct element,
 
             if (temp->next != tail) { // if the found element is not the tail,

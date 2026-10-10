@@ -27,8 +27,10 @@ class ReservationManager {
         list<Reservation> reservations; // linked list that stores all reservations
         stack<Reservation> canceled; // stack of canceled reservations -- most recent cancellation is on top (only the most recent can be restored/popped)
 
-        void addToList(Reservation* res); // helper function
-        Reservation* removeFromList(Reservation* res); // helper function
+        void addToList(Reservation* res); // helper function for appending to the linked list
+        Reservation* removeFromList(Reservation* res); // helper function for removing an item from the linked list
+        void pushCanceled(Reservation* res); // helper function for pushing onto stack
+        void popCanceled(); // helper function for popping off the stack
 
         Reservation* head = NULL; // head of list of reservations
         Reservation* tail = NULL; // tail of list of reservations
