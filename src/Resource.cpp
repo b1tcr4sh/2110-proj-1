@@ -16,49 +16,50 @@ Resource::Resource(string id, string name, ResourceType type, bool available) { 
     this->available = available;
 }
 
-void Resource::addToWaitingList(string studentName, string studentID){ // append to waiting list queue
+void Resource::addToWaitingList(string studentName, string studentID){ // append to the waiting list queue
     Student* stu = new Student(studentName, studentID); // create a new student
 
-    if (waitingListTop != NULL) {// if there are already elements in the stack (stack is not empty and head/tail are initialized),
-        stu->next = waitingListTop; // then set the new student to point to the current head (prepend to front of list/top of stack)
-        waitingListTop = stu; // then set the new student as the head
+    if (waitingListFront != NULL) {// if there are already elements in the stack (stack is not empty and head/tail are initialized),
+        // stu->next = waitingListTop; // then set the new student to point to the current head (prepend to front of list/top of stack)
+        waitingListBack->next = stu; // set the last element (tail) to point to this new element
+        waitingListBack = stu; // then set the new element as the tail
 
     } else { // if the stack is not initialized (head/tail are null),
-        waitingListTop = stu; // then new element is the head
-        waitingListBottom = waitingListTop; // and the tail
+        waitingListFront = stu; // then new element is the head
+        waitingListBack = waitingListFront; // and the tail
     } 
     waitingListLength++; // regardless, the list is one larger
 }
 
 void Resource::removeFromWaitingList(){ // remove the person at the front of the waiting list
-    Student* temp = waitingListTop; // store the top of the stack
+    Student* temp = waitingListFront; // store the front of the queue
 
     if (temp->next == NULL) { // if there is only 1 item in the list,
-        waitingListTop = NULL; // set head to point to nothing
-        waitingListBottom = NULL; // and tail
+        waitingListFront = NULL; // set head to point to nothing
+        waitingListBack = NULL; // and tail
         delete temp; // then we can safely delete the last element
         return; // and exit early
     }
 
     // if there are more elements in the list ....
-    waitingListTop = temp->next; // then set head to the next element in the stack (the top's next)
-    delete temp; // now we can get rid of the previous top
+    waitingListFront = temp->next; // then set head to the next element in the queue (the front's next)
+    delete temp; // now we can get rid of the previous head
     waitingListLength--; // list is one smaller
 }
 
 void Resource::displayWaitingList() { // iterate through the list and print out every student in it
-    if (waitingListTop == NULL) {
+    if (waitingListFront == NULL) {
         cout << endl << "Waiting list is empty." << endl; // if the list is empty, there's nothing to do
         return;        
     }
 
     cout << endl << "Waiting List: " << endl;
 
-    Student* temp = waitingListTop; // temporary student variable to hold the one we are currently looking at. Could say this is like an iterator.
+    Student* temp = waitingListFront; // temporary student variable to hold the one we are currently looking at. Could say this is like an iterator.
 
     for (int i = 0; i < waitingListLength; i++) {
         cout << "   " << temp->name << ": " << temp->id << endl;
-        if (temp != waitingListBottom) {
+        if (temp != waitingListBack) {
             temp = temp->next; // iterate to the next element if it exists
         }
     }

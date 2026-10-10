@@ -32,8 +32,8 @@ public:
 
 private:
    queue<string> WaitingList; // queue that holds waiting list for this resource
-   Student* waitingListTop = NULL; // head of waiting list (top of stack)
-   Student* waitingListBottom = NULL; // tail of waiting list (bottom of stack)
+   Student* waitingListFront = NULL; // head of waiting list (front of queue)
+   Student* waitingListBack = NULL; // tail of waiting list (back of queue)
    int waitingListLength = 0;
 };
 #endif

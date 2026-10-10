@@ -60,7 +60,7 @@ void searchReservationFromUser(ReservationManager* manager) {
 
   cout << endl << res->ID << ": " << res->date << endl; // print out the ID and date
   cout << " Resource: " << res->resourceID << endl; // print out the resource ID
-  cout << " Student: " << res->studentName << " | " << res->studentID; // print out student info
+  cout << " Student: " << res->studentName << " | " << res->studentID << endl; // print out student info
 }
 
 void peekCancellation(ReservationManager* man) {
