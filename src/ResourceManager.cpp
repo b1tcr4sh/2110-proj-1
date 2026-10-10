@@ -167,5 +167,6 @@ void ResourceManager::GenerateReport() {
     // number of stutdents waiting for the resoruce given
     // report needs to be gernerated by using the wait listing data already given
     cout << "Waiting List Stats: " << endl;
-    
+    for (unsigned int i = 0; i < existingResources.size(); i++) {
+        cout << existingResources.at(i).name << ": " << existingResources.at(i).waitingListLength << " students waiting." << endl;
     }

@@ -13,6 +13,7 @@ public:
   string type; // type of resource
   bool available; // if it is available or not
   int reservationCount; // number of reservations for this resource
+  int waitingListLength; // length of waiting list
   
   void addToWaitingList(string studentName, string studentID); // add
 
