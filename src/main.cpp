@@ -33,7 +33,11 @@ void createReservationFromUser(ReservationManager* manager, ResourceManager* res
 
   int id = manager->Create(studentID, studentName, resourceID, date); // use all of these to create a reservation
 
-  cout << endl << "added reservation for " << studentName << " with id " << id << endl;
+  if (id != -1) {
+    cout << endl << "added reservation for " << studentName << " with id " << id << endl;
+  } else {
+      cout << "reservation creation aborted." << endl;
+  }
 }
 
 void cancelReservationFromUser(ReservationManager* manager) {

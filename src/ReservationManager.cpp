@@ -1,6 +1,7 @@
 #include "../include/ReservationManager.h"
 #include "../include/ResourceManager.h"
 
+#include <cstddef>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -64,6 +65,10 @@ int ReservationManager::Create(int ID, string studentID, string studentName, str
     addToList(res); // append to the list of reservations
     
     Resource* resource = resourceManager->FindByID(resourceID);  // find the resource
+
+    if (resource == NULL) { // if the resource wasn't found
+        return -1; // then, exit early and abort
+    }
 
     if (resource->available) { 
         resource->available = false; // if available, mark unavailable

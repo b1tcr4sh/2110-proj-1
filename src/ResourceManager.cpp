@@ -130,7 +130,7 @@ Resource* ResourceManager::FindByID(string ID) { // find a resource in the vecto
     }
 
     cout << "Was unabe to find resource " << ID << endl; 
-    return nullptr; // if we were unable to find it, return null; for error handling
+    return NULL; // if we were unable to find it, return null; for error handling
 }
 
 void ResourceManager::GenerateReport() {
