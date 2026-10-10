@@ -47,11 +47,15 @@ void ReservationManager::PrintActiveReservations() {
         cout << " Resource: " << temp->resourceID << endl;
         cout << " Student: " << temp->studentName << " | " << temp->studentID << endl;
 
-        if (temp->next == NULL) { // if the next element doesn't exist (this should be redundant), 
-            return; // then exist early so we don't iterate
-        }
+        // if (temp->next == NULL) { // if the next element doesn't exist (this should be redundant), 
+        //     return; // then exist early so we don't iterate
+        // }
         temp = temp->next; // otherwise, step to the next element
     } while (temp != tail);
+
+    cout << tail->ID << ": " << tail->date << endl;
+        cout << " Resource: " << tail->resourceID << endl;
+        cout << " Student: " << tail->studentName << " | " << tail->studentID << endl;
 }
 
 int ReservationManager::Create(int ID, string studentID, string studentName, string resourceID, string date) { // creates a new reservation and enqueues it    
