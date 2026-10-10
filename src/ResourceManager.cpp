@@ -139,13 +139,33 @@ void ResourceManager::GenerateReport() {
     // the resource and the how many reservations the item has
 
     cout << "==== Resoruce Utillization ==== " << endl;
+    
+    int reservationCount = 0;
 
-        // the most requested resoruces 
+    for (unsigned int i = 0; i < existingResources.size(); i++) {
+        cout << existingResources.at(i).name << " has " << reservationCount << " reservations." << endl;
+    }
+
+        // the most requested resoruces: 
+        // focused on which resource has the most reservations / requests
+
     cout << "==== The most Requested Resoruces ==== " << endl;
 
+    int maxReservations = 0;
+    string mostRequestedResource = "";
+
+    for (unsigned int i = 0; i < existingResources.size(); i++) {
+        if (existingResources.at(i).reservationCount > maxReservations) {
+            maxReservations = existingResources.at(i).reservationCount;
+            mostRequestedResource = existingResources.at(i).name;
+        }
+    }
+
+    cout << "Most Requested Resource: " << mostRequestedResource << " with " << maxReservations << " reservations." << endl;
 
     // waiting-list stats section:
     // number of stutdents waiting for the resoruce given
     // report needs to be gernerated by using the wait listing data already given
     cout << "Waiting List Stats: " << endl;
-}
+    
+    }
