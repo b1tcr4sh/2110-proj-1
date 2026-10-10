@@ -167,31 +167,14 @@ Resource* ResourceManager::FindByID(string ID) { // find a resource in the vecto
         cout << "==== SYSTEM REPORTS ====" << endl;
 
         // resource utilization section:
-        // the resource and the reservations the item has 
+        // the resource and the how many reservations the item has
+
+        cout << "==== Resoruce Utillization ==== " << endl;
+
+         // the most requested resoruces 
         cout << "==== The most Requested Resoruces ==== " << endl;
 
-        int MaxRequested = 0;
 
-        for (insigned int i = 0; i < existingResources.size(); i++) {
-            if (existingResources.at(i).requested > MaxRequested) {
-                MaxRequested = existingResources.at(i).requested;
-            }
-        }
-
-        if (MaxRequested == 0) {
-            cout << "There are no requested resources at this time." << endl; // if there arent any requests at the time moment
-        } else {
-
-            for (unsigned int i = 0; i < existingResources.size(); i++) {
-                if (existingResources.at(i).requested == MaxRequested) {
-                    cout << "ID: " << existingResources.at(i).id << ", Name: " << existingResources.at(i).name << ", Type: " << existingResources.at(i).type << ", Requests: " << existingResources.at(i).requested << endl;
-                }
-            }
-
-        }
-
-
-    
         // waiting-list stats section:
         // number of stutdents waiting for the resoruce given
         // report needs to be gernerated by using the wait listing data already given
