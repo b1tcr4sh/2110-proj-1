@@ -140,10 +140,9 @@ void ResourceManager::GenerateReport() {
 
     cout << "==== Resoruce Utillization ==== " << endl;
     
-    int reservationCount = 0;
 
     for (unsigned int i = 0; i < existingResources.size(); i++) {
-        cout << existingResources.at(i).name << " has " << reservationCount << " reservations." << endl;
+        cout << existingResources.at(i).name << " has " << existingResources.at(i).reservationCount << " reservations." << endl;
     }
 
         // the most requested resoruces: 
