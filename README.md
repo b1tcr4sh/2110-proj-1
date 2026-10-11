@@ -1,6 +1,6 @@
 ## Campus Resource Reservation System
 
-#Description
+## Description
 
 This is a C++ program implemented to help manage campus resources and student reservations. This program will help users idetentify availble resources, create and cancel waiting lists, and undo recent cancellations. 
 
