@@ -6,8 +6,6 @@
 
 using namespace std;
 
-Resource* ResourceManager::ResourceByID(string id) {return 0;} // not implemented yet
-
 void ResourceManager::PrintList() { // print the list of resources
     cout << endl << "Resources: " << endl << endl;
 
@@ -133,12 +131,12 @@ Resource* ResourceManager::FindByID(string ID) { // find a resource in the vecto
 }
 
 void ResourceManager::GenerateReport() {
-    cout << "==== SYSTEM REPORTS ====" << endl;
+    cout << endl << "==== SYSTEM REPORTS ====" << endl;
 
     // resource utilization section:
     // the resource and the how many reservations the item has
 
-    cout << "==== Resoruce Utillization ==== " << endl;
+    cout << endl << "==== Resoruce Utillization ==== " << endl;
     
 
     for (unsigned int i = 0; i < existingResources.size(); i++) {
@@ -148,7 +146,7 @@ void ResourceManager::GenerateReport() {
         // the most requested resoruces: 
         // focused on which resource has the most reservations / requests
 
-    cout << "==== The most Requested Resoruces ==== " << endl;
+    cout << endl << "==== The most Requested Resoruces ==== " << endl;
 
     int maxReservations = 0;
     string mostRequestedResource = "";
@@ -156,16 +154,20 @@ void ResourceManager::GenerateReport() {
     for (unsigned int i = 0; i < existingResources.size(); i++) {
         if (existingResources.at(i).reservationCount > maxReservations) {
             maxReservations = existingResources.at(i).reservationCount;
-            mostRequestedResource = existingResources.at(i).name;
         }
     }
-
-    cout << "Most Requested Resource: " << mostRequestedResource << " with " << maxReservations << " reservations." << endl;
+    cout << endl << "Most Requested Resource(s) with " << maxReservations << " reservations:" << endl;
+    for (unsigned int i = 0; i < existingResources.size(); i++) { // in case there are multiple with the same greatest number 
+        if (existingResources.at(i).reservationCount >= maxReservations) {
+            cout << "   " << existingResources.at(i).name << endl;
+        }
+    }
 
     // waiting-list stats section:
     // number of stutdents waiting for the resoruce given
     // report needs to be gernerated by using the wait listing data already given
-    cout << "Waiting List Stats: " << endl;
+    cout << endl << "==== Waiting List Stats: ====" << endl;
     for (unsigned int i = 0; i < existingResources.size(); i++) {
         cout << existingResources.at(i).name << ": " << existingResources.at(i).waitingListLength << " students waiting." << endl;
     }
+}

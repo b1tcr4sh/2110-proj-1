@@ -40,7 +40,7 @@ void ReservationManager::LoadFromFile() { // loads reservation data line-by-line
 }
 
 void ReservationManager::PrintActiveReservations() {
-    cout << "Active Reservations: " << endl;
+    cout <<  endl << "==== Active Reservations: ====" << endl;
     Reservation* temp = head; // get the top
 
     do {
@@ -75,6 +75,7 @@ int ReservationManager::Create(int ID, string studentID, string studentName, str
     } else {
         resource->addToWaitingList(studentName, studentID); //  if unavailable, add the student's name to the waiting list of the resource they are requesting
     }
+    resource->reservationCount++; // increment counter
 
     mostRecentID = ID; // this ID is now the most recent
     return ID;

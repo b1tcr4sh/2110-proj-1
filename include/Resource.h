@@ -13,7 +13,7 @@ public:
   string type; // type of resource
   bool available; // if it is available or not
   int reservationCount; // number of reservations for this resource
-  int waitingListLength; // length of waiting list
+  int waitingListLength = 0; // length of waiting list
   
   void addToWaitingList(string studentName, string studentID); // add
 
@@ -27,6 +27,5 @@ private:
    queue<string> WaitingList; // queue that holds waiting list for this resource
    Student* waitingListFront = NULL; // head of waiting list (front of queue)
    Student* waitingListBack = NULL; // tail of waiting list (back of queue)
-   int waitingListLength = 0;
 };
 #endif
