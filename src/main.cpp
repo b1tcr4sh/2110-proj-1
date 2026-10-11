@@ -104,6 +104,115 @@ void restoreReservation(ReservationManager* man) {
   cout << "Restored reservation " << res.ID << endl; // not implemented yet
 }
 
+void searchResourceByID(ResourceManager* man) {
+  cout << endl << "ID > ";
+  string id;
+  cin >> id;
+
+  Resource* resource = man->FindByID(id);  // find the resource
+
+  if (resource == NULL) { // if the resource wasn't found
+      cout << endl << "Resource " << id << " could not be found. Aborting." << endl; // then, exit early and abort
+      return;
+  }
+
+  cout << endl << resource->id << " | " << resource->name << " | " << man->ResourceTypeToString(resource->type) << " | " << (resource->available ? "available" : "unavailable") << endl;
+}
+
+void searchResourceByName(ResourceManager* man) {
+  cout << endl << "Name:" << endl;
+  string name;
+  cin.ignore();
+  getline(cin, name);
+
+  Resource res = man->FindByName(name);
+
+  if (res.name == "none") {
+    cout << endl << "Resource " << name << " could not be found or list is empty. Aborting." << endl;
+    return;
+  }
+
+  cout << endl << res.id << " | " << res.name << " | " << man->ResourceTypeToString(res.type) << " | " << (res.available ? "available" : "unavailable") << endl;
+}
+
+void listResourceByType(ResourceManager* man) {
+  cout << "Select Type: " << endl << "  1. Study Room" << endl << "  2. Laptop" << endl << "  3. Calculator" << endl << "  4. Lab Equipment" << endl << "  5. Tutoring Appointment" << endl << endl;
+
+  cout << endl << " > ";
+  int type;
+  cin >> type;
+
+  if (type < 1 || type > 5) {
+    cout << "Invalid Option. Aborting." << endl;
+    return;
+  }
+
+  switch (type) {
+    case 1:
+      man->ListAllByType(ResourceType::Study_Room);
+    return;
+    case 2:
+      man->ListAllByType(ResourceType::Laptop);
+    return;
+    case 3:
+      man->ListAllByType(ResourceType::Calculator);
+    return;
+    case 4:
+      man->ListAllByType(ResourceType::Lab_Equipment);
+    return;
+    case 5:
+      man->ListAllByType(ResourceType::Tutoring_Appointment);
+    return;
+  }
+}
+
+void listResourceByAvailability(ResourceManager* man) {
+  cout << endl << "Available? (y/n) > ";
+  string available;
+  cin >> available;
+
+  if (available == "y") {
+    man->ListAllByAvailability(true);
+  } else if (available == "n") {
+    man->ListAllByAvailability(false);
+  } else {
+    cout << endl << "Invalid response. Aborting." << endl;
+    return;
+  }
+}
+ 
+void searchResources(ResourceManager* man) {
+  cout << endl << "Search by:" << endl;
+  cout << "1. ID" << endl;
+  cout << "2. Name" << endl;
+  cout << "3. Type" << endl;
+  cout << "4. Availability" << endl << endl;
+  cout << " > ";
+
+  int sel;
+  cin >> sel;
+
+  if (sel < 1 || sel > 5) {
+    cout << endl << "Invalid selection. Aborting." << endl;
+    return;
+  }
+
+  switch (sel) {
+    case 1:
+      searchResourceByID(man);
+    return;
+    case 2:
+      searchResourceByName(man);
+    return;
+    case 3:
+      listResourceByType(man);
+    return;
+    case 4:
+      listResourceByAvailability(man);
+    return;
+  }
+}
+
 bool handleInput(int input, ResourceManager* resourceManager, ReservationManager* reservationManager) {
 
   // switch to handle different inputs (numbers 1 - 10); also handles errors in case input is incorrect
@@ -111,36 +220,39 @@ bool handleInput(int input, ResourceManager* resourceManager, ReservationManager
     case 1: // View Resources
         resourceManager->PrintList(); // print the list or resources
       return true;
-    case 2: // Create Reservation
+    case 2: // search resources
+        searchResources(resourceManager);
+      return true;
+    case 3: // Create Reservation
         createReservationFromUser(reservationManager, resourceManager); // handle creating a reservation
       return true;
-    case 3: // Cancel Reservation
+    case 4: // Cancel Reservation
         cancelReservationFromUser(reservationManager); // handle cancelling a reservation
       return true;
-    case 4: // View Waiting Lists
+    case 5: // View Waiting Lists
       viewWaitingLists(resourceManager); // handle getting a resource and printing it's waiting list
       return true;
-    case 5: // Undo Cancellation
+    case 6: // Undo Cancellation
       restoreReservation(reservationManager);
       return true;
-    case 6: // Search Reservations
+    case 7: // Search Reservations
       searchReservationFromUser(reservationManager); // handle searching for a reservation and printing it's info
       return true;
-    case 7: // Sort Resources
+    case 8: // Sort Resources
       resourceManager->Sort(); // sort the resources; not yet implemented
       resourceManager->PrintList(); // print them out
       return true;
-    case 8: // Generate Report
+    case 9: // Generate Report
       resourceManager->GenerateReport(); // generate a report of all resources
       reservationManager->PrintActiveReservations(); // print active reservations
       return true;
-    case 9:
+    case 10:
       reservationManager->PrintActiveReservations(); // print active reservations
       return true;
-    case 10: // see the most recent cancellation
+    case 11: // see the most recent cancellation
       peekCancellation(reservationManager);
       return true;
-    case 11: // exit program
+    case 12: // exit program
       return false; // return false to escape input loop (exit program)
     default:
         cout << "Input not recognized!!" << endl;
@@ -151,16 +263,17 @@ bool handleInput(int input, ResourceManager* resourceManager, ReservationManager
 void printMenu() {
   cout << "===== Campus Resource Reservation System =====" << endl;
   cout << "1. View Resources" << endl;
-  cout << "2. Create Reservation" << endl;
-  cout << "3. Cancel Reservation" << endl;
-  cout << "4. View Waiting Lists" << endl;
-  cout << "5. Undo Cancellation" << endl;
-  cout << "6. Search Reservations" << endl;
-  cout << "7. Sort Resources" << endl;
-  cout << "8. Generate Report" << endl;
-  cout << "9. View Active Reservations" << endl;
-  cout << "10. View Last Cancellation" << endl;
-  cout << "11. Exit" << endl;
+  cout << "2. Search Resources" << endl;
+  cout << "3. Create Reservation" << endl;
+  cout << "4. Cancel Reservation" << endl;
+  cout << "5. View Waiting Lists" << endl;
+  cout << "6. Undo Cancellation" << endl;
+  cout << "7. Search Reservations" << endl;
+  cout << "8. Sort Resources" << endl;
+  cout << "9. Generate Report" << endl;
+  cout << "10. View Active Reservations" << endl;
+  cout << "11. View Last Cancellation" << endl;
+  cout << "12. Exit" << endl;
   cout << endl << "Selection > ";
 }
 

@@ -12,7 +12,7 @@ void ResourceManager::PrintList() { // print the list of resources
     for (unsigned int i = 0; i < existingResources.size(); i++) { // iterate through the list
         Resource e = existingResources.at(i);
 
-        cout << e.id << " | " << e.name << " | " << e.type << " | " << (e.available ? "available" : "unavailable") << endl;
+        cout << e.id << " | " << e.name << " | " << ResourceTypeToString(e.type) << " | " << (e.available ? "available" : "unavailable") << endl;
     }
 }
 
@@ -103,6 +103,17 @@ void ResourceManager::LoadFromFile() { // load from file
         string availability;
         getline(stream, availability, '|'); // get availability of resource; delimited by "|"
 
+        ResourceType type;
+        if (typeString == "Study Room") type = Study_Room;
+        else if (typeString == "Laptop") type = Laptop;
+        else if (typeString == "Calculator") type = Calculator;
+        else if (typeString == "Lab Equipment") type = Lab_Equipment;
+        else if (typeString == "Tutoring Appointment") type = Tutoring_Appointment;
+        else {
+            cout << "Was unable to read type ( " << typeString << " ) for " << id << endl;
+        }
+
+
         // handle parsing availability into bool
         bool available;
         if (availability == "Available") { 
@@ -113,7 +124,7 @@ void ResourceManager::LoadFromFile() { // load from file
             cout << "Was unable to read availability ( " << availability << " ) for " << id << endl;
         }
 
-        Resource resource(id, name, typeString, available); // create a new resource object
+        Resource resource(id, name, type, available); // create a new resource object
 
         existingResources.push_back(resource); // push it into the vector
 
@@ -136,7 +147,7 @@ void ResourceManager::GenerateReport() {
     // resource utilization section:
     // the resource and the how many reservations the item has
 
-    cout << endl << "==== Resoruce Utillization ==== " << endl;
+    cout << endl << "==== Resource Utillization ==== " << endl;
     
 
     for (unsigned int i = 0; i < existingResources.size(); i++) {
@@ -146,7 +157,7 @@ void ResourceManager::GenerateReport() {
         // the most requested resoruces: 
         // focused on which resource has the most reservations / requests
 
-    cout << endl << "==== The most Requested Resoruces ==== " << endl;
+    cout << endl << "==== The most Requested Resources ==== " << endl;
 
     int maxReservations = 0;
     string mostRequestedResource = "";
@@ -169,5 +180,66 @@ void ResourceManager::GenerateReport() {
     cout << endl << "==== Waiting List Stats: ====" << endl;
     for (unsigned int i = 0; i < existingResources.size(); i++) {
         cout << existingResources.at(i).name << ": " << existingResources.at(i).waitingListLength << " students waiting." << endl;
+    }
+}
+
+Resource ResourceManager::FindByName(string name) { // find a single resource by it's nameout
+    if (existingResources.size() < 1) { // if it's empty
+        return Resource("none", "none", ResourceType::Study_Room, false); // list is empty, so return a blank
+    }
+
+    for (unsigned int i = 0; i < existingResources.size(); i++) { // iterate through until found or not
+        if (existingResources.at(i).name == name) { // if name matches,
+            return existingResources.at(i); //  then return it
+        }
+    }
+
+    return Resource("none", "none", ResourceType::Study_Room, false); // otherwise, it wasn't found, so return a blank
+}
+
+void ResourceManager::ListAllByType(ResourceType type) {// find all resources of a type
+    if (existingResources.size() < 1) { // if it's empty
+        cout << endl << "List of resources is empty" << endl;
+        return;
+    }
+
+    cout << endl << "==== All Resources of Type " << ResourceTypeToString(type) << " ====" << endl << endl;
+
+    for (unsigned int i = 0; i < existingResources.size(); i++) { // iterate through 
+        if (existingResources.at(i).type == type) {
+            cout << existingResources.at(i).id << " | " << existingResources.at(i).name << " | " << ResourceTypeToString(existingResources.at(i).type) << " | " << (existingResources.at(i).available ? "available" : "unavailable") << endl;
+        }
+    }
+}
+void ResourceManager::ListAllByAvailability(bool available) { // find all available or unavailable resources
+    if (existingResources.size() < 1) { // if it's empty
+        cout << endl << "List of resources is empty" << endl;
+        return;
+    }
+
+    if (available) cout << endl << "==== All Available Resources ====" << endl << endl;
+    else cout << endl << "==== All Unavailable Resources ====" << endl << endl;
+
+    for (unsigned int i = 0; i < existingResources.size(); i++) { // iterate through 
+        if (existingResources.at(i).available == available) {
+            cout << existingResources.at(i).id << " | " << existingResources.at(i).name << " | " << ResourceTypeToString(existingResources.at(i).type) << " | " << (existingResources.at(i).available ? "available" : "unavailable") << endl;
+        }
+    }
+}
+
+string ResourceManager::ResourceTypeToString(ResourceType type) {
+    switch (type) {
+        case Study_Room:
+        return "Study Room";
+        case Laptop:
+        return "Laptop";
+        case Calculator:
+        return "Calculator";
+        case Lab_Equipment:
+        return "Lab Equipment";
+        case Tutoring_Appointment:
+        return "Tutoring Appointment";
+        default:
+        return "Unkown";
     }
 }

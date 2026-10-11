@@ -6,13 +6,21 @@
 
 using namespace std;
 
+enum ResourceType {
+  Study_Room,
+  Laptop,
+  Calculator,
+  Lab_Equipment,
+  Tutoring_Appointment
+};
+
 class Resource {
 public:
   string id; // id of resource
   string name; // name of resource
-  string type; // type of resource
+  ResourceType type; // type of resource
   bool available; // if it is available or not
-  int reservationCount; // number of reservations for this resource
+  int reservationCount = 0; // number of reservations for this resource
   int waitingListLength = 0; // length of waiting list
   
   void addToWaitingList(string studentName, string studentID); // add
@@ -21,7 +29,7 @@ public:
 
   void displayWaitingList(); // display
 
-  Resource(string id, string name, string type, bool available); // constructor
+  Resource(string id, string name, ResourceType type, bool available); // constructor
 
 private:
    queue<string> WaitingList; // queue that holds waiting list for this resource
